@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        .example-wrap {
+            width: 75%;
+            margin: 0 auto;
+            position: relative;
+            background: #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            padding-top: 48px;
+        }
+    </style>
+    <link rel="stylesheet" href="../dist/party-table/party-table.min.css">
+</head>
+<body data-ng-controller="ExampleController as vm">
+
+<h1>Basic example</h1>
+
+<div class="example-wrap">
+    <party-table options="vm.options" items="vm.items"></party-table>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+<script src="../dist/party-table/party-table.min.js"></script>
+<script defer>
+
+    var app = angular.module('app', ['party.table']);
+
+    app.controller('ExampleController', ['$scope', function ($scope) {
+        console.log('scope', $scope);
+
+        var vm = this;
+
+        vm.items = [
+            {
+                name: 'Russia',
+                population: 146000000,
+                area: 17075200
+            }, {
+                name: 'USA',
+                population: 320000000,
+                area: 3796742
+            },
+            {
+                name: 'Germany',
+                population: 80000000,
+                area: 357168
+            },
+            {
+                name: 'France',
+                population: 66000000,
+                area: 643801
+            },
+            {
+                name: 'Italy',
+                population: 60000000,
+                area: 301338
+            }];
+        
+        vm.options = {
+            filters: [{
+                key: 'name',
+                name: 'Name'
+            }],
+            columns: [
+                {
+                    key: 'name',
+                    name: 'Name'
+                },
+                {
+                    key: 'population',
+                    name: 'Population'
+                },
+                {
+                    key: 'area',
+                    name: 'Area'
+                }]
+        }
+    }])
+
+
+</script>
+</body>
+</html>
