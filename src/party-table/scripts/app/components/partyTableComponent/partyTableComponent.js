@@ -32,6 +32,10 @@
                 grouping: [],
                 sorting: [],
                 folding: [],
+
+                interface: {
+                    dragging: false
+                },
                 externalCallback: function () {
 
                     vm.originalItems = JSON.parse(JSON.stringify(vm.items));
@@ -40,9 +44,9 @@
 
                     vm.groupTableService.columns.setColumns(vm.options.columns);
                     vm.groupTableService.filtering.setFilters(vm.options.filters);
-                    vm.groupTableService.grouping.setGroups(vm.options.grouping, [vm.entityType]);
+                    vm.groupTableService.grouping.setGroups(vm.options.grouping, vm.options.entity_models);
                     //console.log("EXTERNAL CALLBACK ", vm.folding);
-                    vm.groupTableService.folding.setFolds(vm.options.folding);
+                    //vm.groupTableService.folding.setFolds(vm.options.folding);
                     //console.log('UPDATE TABLE scope.sorting.group', vm.sorting.group);
 
                     //vm.groupTableService.sorting.group.sort(vm.options.sorting.group);

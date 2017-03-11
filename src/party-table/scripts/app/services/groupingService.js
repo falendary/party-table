@@ -116,14 +116,12 @@
 
 
         var keywords = [];
-        keywords = keywords.concat(baseAttrs);
 
-        var entityAttrsKeys = Object.keys(entityAttrs);
-
-        entityAttrsKeys.forEach(function (entityAttrsKey) {
-            keywords = keywords.concat(entityAttrs[entityAttrsKey]);
-        });
-
+        entityTypes.forEach(function (entity) {
+            entity.fields.forEach(function (field) {
+                keywords.push(field);
+            })
+        })
 
         var hasGroups = true;
         var groupName = '';

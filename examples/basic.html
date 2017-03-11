@@ -23,6 +23,7 @@
             padding-top: 48px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.css">
     <link rel="stylesheet" href="../dist/party-table/party-table.min.css">
 </head>
 <body data-ng-controller="ExampleController as vm">
@@ -36,10 +37,14 @@
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.3/angular-material.js"></script>
 <script src="../dist/party-table/party-table.min.js"></script>
 <script defer>
 
-    var app = angular.module('app', ['party.table']);
+    var app = angular.module('app', ['ngMaterial', 'party.table']);
 
     app.controller('ExampleController', ['$scope', function ($scope) {
         console.log('scope', $scope);
@@ -73,11 +78,37 @@
             }];
 
         vm.options = {
+            entity_models: [{
+                name: 'default',
+                fields: [
+                    {
+                        key: 'name',
+                        name: 'Name',
+                        value_type: 'string'
+                    },
+                    {
+                        key: 'population',
+                        name: 'Population',
+                        value_type: 'integer'
+                    },
+                    {
+                        key: 'population',
+                        name: 'Population',
+                        value_type: 'integer'
+                    }
+
+                ]
+            }],
             filters: [{
                 key: 'name',
                 name: 'Name'
             }],
-            grouping: [],
+            grouping: [
+                {
+                    key: 'name',
+                    name: 'Name'
+                }
+            ],
             columns: [
                 {
                     key: 'name',
