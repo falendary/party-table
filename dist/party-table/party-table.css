@@ -785,7 +785,7 @@ body.md-dialog-is-showing {
 .g-filter-item.f-disabled md-checkbox .md-icon {
   background: #fff;
 }
-.g-filter-item.f-disabled input {
+.g-filter-item.f-disabled input[type="text"] {
   opacity: .5;
   pointer-events: none;
 }

@@ -9,6 +9,8 @@
     //var groupTableReportService = require('../../services/groupTable/groupTableReportService');
     //var groupTableBodyHelper = require('../../helpers/groupTableBodyHelper');
 
+    var GroupTableService = require('../../services/groupTableService');
+
     module.exports = {
         bindings: {
             options: '=',
@@ -43,6 +45,12 @@
             var promisesAttributeTypesAlreadyAdded = {};
 
             var entityFieldsArray = {};
+
+            var groupTableService = GroupTableService.getInstance();
+
+            $scope.itemsProjection = function(){
+                return groupTableService.projection();
+            };
 
 
             //baseAttrs = metaService.getBaseAttrs();
