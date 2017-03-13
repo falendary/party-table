@@ -10,9 +10,14 @@ body {
     background: #ccc;
 }
 
-nav {
+header nav {
     background: #fff;
     color: #121212;
+    padding: 0 16px;
+}
+header nav h5 {
+    margin: 0;
+    padding-top: 16px;
 }
 
 .main-wrap:after {
@@ -23,9 +28,13 @@ nav {
 
 .source-code-panel {
     width: 360px;
-    height: 80vh;
+    height: 528px;
     float: left;
     display: block;
+}
+.source-code-panel .card {
+    height: 100%;
+    margin: 0;
 }
 
 .workarea {

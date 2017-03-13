@@ -10,7 +10,6 @@
 
     module.exports = {
         bindings: {
-            items: '=',
             options: '='
         },
         controllerAs: 'vm',
@@ -105,6 +104,7 @@
             }
 
             this.$onInit = function () {
+                vm.items = vm.options.items;
                 vm.options = extendDefaults(vm.options, defaultOptions);
 
                 entityService.setEntities(vm.options.entity_models);
