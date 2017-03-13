@@ -1,0 +1,46 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.example-wrap {
+    margin: 0 auto;
+    position: relative;
+    background: #ccc;
+}
+
+nav {
+    background: #fff;
+    color: #121212;
+}
+
+.main-wrap:after {
+    clear: both;
+    display: block;
+    content: ''
+}
+
+.source-code-panel {
+    width: 360px;
+    height: 80vh;
+    float: left;
+    display: block;
+}
+
+.workarea {
+    padding-left: 360px;
+}
+
+.source-code-panel .cm-s-material.CodeMirror {
+    height: 100%;
+    overflow: hidden;
+}
+
+.source-code-panel .cm-s-material.CodeMirror .CodeMirror-vscrollbar {
+    overflow: hidden;
+}
+
+.source-code-panel .cm-s-material.CodeMirror:hover .CodeMirror-vscrollbar {
+    overflow-y: auto;
+}

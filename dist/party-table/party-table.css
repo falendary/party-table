@@ -1,3 +1,6 @@
+.pt-app * {
+  box-sizing: content-box;
+}
 .g-wrapper {
   overflow: hidden;
 }
