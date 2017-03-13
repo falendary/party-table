@@ -61,7 +61,6 @@
         this.setItems = function (itemsSource) {
             this.items = itemsSource;
         };
-        this.extractDynamicAttributes = groupingService.extractDynamicAttributes;
         this.columns = {
             setColumns: function (columns) {
                 //console.log('setColumns', this.items);

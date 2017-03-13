@@ -11,6 +11,9 @@ app.component('groupingArea', require('./app/components/groupingAreaComponent/gr
 app.component('columnArea', require('./app/components/columnAreaComponent/columnAreaComponent.js'));
 
 app.directive('columnResize', [require('./app/directives/columnResizeDirective/columnResizeDirective.js')]);
+app.directive('columnInitWidth', [require('./app/directives/columnInitWidthDirective/columnInitWidthDirective.js')]);
+
+app.controller('DialogController', ['$scope', '$mdDialog', 'data', require('./app/controllers/dialogController/dialogController.js')]);
 
 //app.component('groupClipboardHandler', [require('./app/directives/groupTable/gClipboardHandlerComponent')]);
 //app.component('groupColumnResizer', [require('./app/directives/groupTable/gColumnResizerComponent')]);

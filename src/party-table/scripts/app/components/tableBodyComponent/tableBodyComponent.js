@@ -48,7 +48,7 @@
 
             var groupTableService = GroupTableService.getInstance();
 
-            $scope.itemsProjection = function(){
+            $scope.itemsProjection = function () {
                 return groupTableService.projection();
             };
 
@@ -582,69 +582,9 @@
 
                 //console.log('group', group);
 
-                if (group.hasOwnProperty('r_entityType')) {
-                    return group[group.r_entityType + '_attribute_' + group.source_name];
-                }
-
                 var result = '';
 
-                if (group.value_type === 'classifier') {
-                    if ($scope.readyStatus.cellsFirstReady) {
-                        //console.log('classifiersInstances', classifiersInstances);
-                        if (classifiersInstances.hasOwnProperty($scope.entityType + '_' + group.value) && classifiersInstances[$scope.entityType + '_' + group.value] !== undefined) {
-                            //console.log('11111111111111111111111111111111', classifiersInstances[$scope.entityType]);
-                            if (classifiersInstances[$scope.entityType + '_' + group.value] && classifiersInstances[$scope.entityType + '_' + group.value] !== undefined) {
-                                result = classifiersInstances[$scope.entityType + '_' + group.value].name
-                            }
-                        }
-                    }
-                }
-                if (group.value_type === 'field') {
-                    if (!entityFieldsArray.hasOwnProperty(group.key)) {
-                        //findGroups();
-                    }
-
-                    //console.log('entityFieldsArray', entityFieldsArray.portfolio);
-
-                    if ($scope.readyStatus.cellsFirstReady == true) {
-
-                        if (entityFieldsArray.hasOwnProperty(group.key) &&
-                            entityFieldsArray[group.key] &&
-                            entityFieldsArray[group.key] !== undefined &&
-                            entityFieldsArray[group.key].length) {
-
-                            var i, resultObject;
-                            for (i = 0; i < entityFieldsArray[group.key].length; i = i + 1) {
-
-                                if (group.value !== undefined) {
-                                    if (entityFieldsArray[group.key][i].id === group.value) {
-
-                                        resultObject = entityFieldsArray[group.key][i];
-                                        //console.log('result', resultObject, '++' + entityFieldsArray[group.key][i].id);
-                                    }
-                                }
-
-                            }
-
-
-                            if (resultObject) {
-                                if (result.hasOwnProperty('display_name')) {
-                                    result = resultObject.display_name;
-                                } else {
-                                    if (result.hasOwnProperty('scheme_name')) {
-                                        result = resultObject.scheme_name;
-                                    } else {
-                                        result = resultObject.name;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-
-                if (group.value_type == '10'
-                    || group.value_type == '40'
+                if (group.value_type == 'integer'
                     || group.value_type == 'float'
                     || group.value_type == 'string'
                     || group.value_type == 'date'

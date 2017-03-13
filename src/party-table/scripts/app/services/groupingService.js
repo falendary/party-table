@@ -9,6 +9,8 @@
 
     function returnValue(attribute) {
 
+        console.log('attribute', attribute);
+
         if (attribute['attribute_type_object'].value_type == 30) {
             return attribute['classifier']
         } else {
@@ -69,6 +71,8 @@
 
     function returnValueType(attribute) {
 
+        console.log('attribute', attribute);
+
         if (attribute['attribute_type_object'].value_type == 30) {
             return 'classifier'
         } else {
@@ -118,10 +122,10 @@
         var keywords = [];
 
         entityTypes.forEach(function (entity) {
-            entity.fields.forEach(function (field) {
+            entity.attributes.forEach(function (field) {
                 keywords.push(field);
             })
-        })
+        });
 
         var hasGroups = true;
         var groupName = '';
@@ -137,96 +141,37 @@
         function findGroupsForResult(group, item, attribute) {
 
             var resGroupItem;
-            if (group.hasOwnProperty('id')) {
-                //console.log('group', group);
-                //console.log('attribute[k]', attribute);
 
-                if (group.hasOwnProperty('r_entityType')) {
+            //console.log('keywords', keywords);
+            for (k = 0; k < keywords.length; k = k + 1) {
+                var n, nExist = false;
+                if (group.key === keywords[k].key) {
 
-
-                    //console.log('attribute1111111111111111111', attribute);
-                    //console.log('group1111111111111111111', group);
-
-                    if (group.id == attribute.attribute_type_object.id) {
-
-                        if (returnValue(attribute) !== null) {
-
-                            var _name = group.r_entityType + '_attribute_' + group.source_name;
-                            // '&[' + checkIfEmptyString(_name) + '}-{' + checkIfEmptyString(item[_name]) + ']'
-
-
-                            resGroupItem = {
-                                comparePattern: '&[' + checkIfEmptyString(_name) + '}-{' + checkIfEmptyString(item[_name]) + ']',
-                                key: _name,
-                                value: returnValue(attribute),
-                                value_type: returnValueType(attribute)
-                            };
-
-                            if (group.hasOwnProperty('report_settings')) {
-                                resGroupItem.report_settings = group.report_settings;
-                            }
-
-
-                            groupsForResult.push(resGroupItem);
-                        }
-
-                        //console.log('groupsForResult', groupsForResult);
-
-                    }
-                } else {
-
-                    if (group.id === attribute['attribute_type']) {
-
-                        //console.log('group.id', group);
-
-                        if (returnValue(attribute) !== null) {
-                            resGroupItem = {
-                                comparePattern: '&[' + attribute['attribute_type'] + '}-{' + returnValue(attribute) + ']',
-                                key: attribute['attribute_name'].replace(' ', '_'),
-                                value: returnValue(attribute),
-                                value_type: returnValueType(attribute)
-                            };
-
-                            if (group.hasOwnProperty('report_settings')) {
-                                resGroupItem.report_settings = group.report_settings;
-                            }
-
-
-                            groupsForResult.push(resGroupItem);
+                    //console.log('groupsForResult', groupsForResult);
+                    for (n = 0; n < groupsForResult.length; n = n + 1) {
+                        //console.log('groupsForResult[n]', groupsForResult[n]);
+                        if (groupsForResult[n].comparePattern.indexOf('&[' + keywords[k].key + '}-{' + checkIfEmptyString(item[keywords[k].key]) + ']') !== -1) {
+                            nExist = true;
                         }
                     }
-                }
-            } else {
-                //console.log('keywords', keywords);
-                for (k = 0; k < keywords.length; k = k + 1) {
-                    var n, nExist = false;
-                    if (group.key === keywords[k].key) {
+                    if (!nExist) {
 
-                        //console.log('groupsForResult', groupsForResult);
-                        for (n = 0; n < groupsForResult.length; n = n + 1) {
-                            //console.log('groupsForResult[n]', groupsForResult[n]);
-                            if (groupsForResult[n].comparePattern.indexOf('&[' + keywords[k].key + '}-{' + checkIfEmptyString(item[keywords[k].key]) + ']') !== -1) {
-                                nExist = true;
-                            }
+                        resGroupItem = {
+                            comparePattern: '&[' + keywords[k].key + '}-{' + checkIfEmptyString(item[keywords[k].key]) + ']',
+                            key: keywords[k].key.replace(' ', '_'),
+                            value: checkIfEmptyString(item[keywords[k].key]),
+                            value_type: keywords[k].value_type
+                        };
+
+                        if (group.hasOwnProperty('report_settings')) {
+                            resGroupItem.report_settings = group.report_settings;
                         }
-                        if (!nExist) {
 
-                            resGroupItem = {
-                                comparePattern: '&[' + keywords[k].key + '}-{' + checkIfEmptyString(item[keywords[k].key]) + ']',
-                                key: keywords[k].key.replace(' ', '_'),
-                                value: checkIfEmptyString(item[keywords[k].key]),
-                                value_type: keywords[k].value_type
-                            };
-
-                            if (group.hasOwnProperty('report_settings')) {
-                                resGroupItem.report_settings = group.report_settings;
-                            }
-
-                            groupsForResult.push(resGroupItem);
-                        }
+                        groupsForResult.push(resGroupItem);
                     }
                 }
             }
+
         }
 
         if (groups.length) {

@@ -23,11 +23,11 @@
                     if (filter.options.enabled) {
                         if(filter.options.query) {
                             if(filter.key) {
-                                if (item[filter.key].toLocaleLowerCase().indexOf(filter.options.query.toLocaleLowerCase()) == -1) {
+                                if (item[filter.key].toString().toLocaleLowerCase().indexOf(filter.options.query.toLocaleLowerCase()) == -1) {
                                     accepted = false;
                                 }
                             } else {
-                                if (item[filter.name].toLocaleLowerCase().indexOf(filter.options.query.toLocaleLowerCase()) == -1) {
+                                if (item[filter.name].toString().toLocaleLowerCase().indexOf(filter.options.query.toLocaleLowerCase()) == -1) {
                                     accepted = false;
                                 }
                             }

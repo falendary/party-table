@@ -11,7 +11,7 @@
         },
         templateUrl: 'app/components/groupingAreaComponent/grouping-area-component.html',
         controllerAs: 'vm',
-        controller: function ($scope) {
+        controller: function ($scope, $mdDialog) {
 
             $scope.options = $scope.$parent.options;
 
@@ -220,29 +220,19 @@
 
             $scope.openModalSettings = function (ev) {
 
-                if ($scope.isReport) {
-                    $mdDialog.show({
-                        controller: 'gModalReportController as vm', // ../directives/gTable/gModalComponents
-                        templateUrl: 'views/directives/groupTable/modal-report-view.html',
-                        parent: angular.element(document.body),
-                        targetEvent: ev,
-                        locals: {
+                $mdDialog.show({
+                    controller: 'DialogController as vm', // ../directives/gTable/gModalComponents
+                    templateUrl: 'app/controllers/dialogController/dialog-view.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    locals: {
+                        data: {
                             callback: $scope.externalCallback,
                             parent$scope: $scope
                         }
-                    });
-                } else {
-                    $mdDialog.show({
-                        controller: 'gModalController as vm', // ../directives/gTable/gModalComponents
-                        templateUrl: 'views/directives/groupTable/modal-view.html',
-                        parent: angular.element(document.body),
-                        targetEvent: ev,
-                        locals: {
-                            callback: $scope.externalCallback,
-                            parent$scope: $scope
-                        }
-                    });
-                }
+                    }
+                });
+
             }
         }
     }

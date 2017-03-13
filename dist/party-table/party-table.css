@@ -372,11 +372,8 @@
   overflow: hidden;
 }
 .drag-dialog .g-modal-dialog {
-  left: 0;
-  top: 0;
   max-width: none;
   width: 440px;
-  margin-top: 150px;
 }
 .drag-dialog .g-modal-dialog.md-transition-in {
   transition: none;

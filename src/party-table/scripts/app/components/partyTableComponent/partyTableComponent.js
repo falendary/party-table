@@ -6,6 +6,7 @@
     'use strict';
 
     var GroupTableService = require('../../services/groupTableService');
+    var entityService = require('../../services/entityService');
 
     module.exports = {
         bindings: {
@@ -24,7 +25,17 @@
 
             vm.entityType = 'entity';
 
-
+            var updateOptions = function (params) {
+                if (params.hasOwnProperty('grouping')) {
+                    vm.options.grouping = params.grouping;
+                }
+                if (params.hasOwnProperty('columns')) {
+                    vm.options.columns = params.columns;
+                }
+                if (params.hasOwnProperty('filters')) {
+                    vm.options.filters = params.filters;
+                }
+            };
 
             var defaultOptions = {
                 columns: [],
@@ -32,11 +43,17 @@
                 grouping: [],
                 sorting: [],
                 folding: [],
-
+                entity_models: [],
                 interface: {
                     dragging: false
                 },
-                externalCallback: function () {
+                externalCallback: function (params) {
+
+                    console.log('params', params);
+
+                    if (params.hasOwnProperty('options')) {
+                        updateOptions(params.options);
+                    }
 
                     vm.originalItems = JSON.parse(JSON.stringify(vm.items));
 
@@ -52,7 +69,7 @@
                     //vm.groupTableService.sorting.group.sort(vm.options.sorting.group);
                     //vm.groupTableService.sorting.column.sort(vm.options.sorting.column);
 
-                    console.log('projection', vm.groupTableService.projection());
+                    //console.log('projection', vm.groupTableService.projection());
                 },
 
                 pagination: {
@@ -89,6 +106,8 @@
 
             this.$onInit = function () {
                 vm.options = extendDefaults(vm.options, defaultOptions);
+
+                entityService.setEntities(vm.options.entity_models);
 
                 //console.log('vm.options', vm.options);
             };
