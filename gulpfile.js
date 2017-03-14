@@ -91,7 +91,7 @@
 
     gulp.task(appName + '-watch-All', function () {
         livereload.listen(35728);
-        //gulp.watch('src/' + appName + '/**/*.less', [appName + '-less-to-css-min']);
+        gulp.watch('src/' + appName + '/**/*.less', [appName + '-less-to-css-min']);
         gulp.watch('src/' + appName + '/**/*.js', [appName + '-js-min']);
         gulp.watch('src/' + appName + '/**/*.html', [appName + '-HTML-to-JS', appName + '-js-min']);
         //gulp.watch('src/index.html', [appName + '-html-min']);

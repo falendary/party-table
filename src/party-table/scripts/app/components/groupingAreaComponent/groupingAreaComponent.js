@@ -11,7 +11,7 @@
         },
         templateUrl: 'app/components/groupingAreaComponent/grouping-area-component.html',
         controllerAs: 'vm',
-        controller: function ($scope, $mdDialog) {
+        controller: function ($scope, ptDialog) {
 
             $scope.options = $scope.$parent.options;
 
@@ -220,7 +220,9 @@
 
             $scope.openModalSettings = function (ev) {
 
-                $mdDialog.show({
+                console.log('ptDialog', ptDialog);
+
+                ptDialog.create({
                     controller: 'DialogController as vm', // ../directives/gTable/gModalComponents
                     templateUrl: 'app/controllers/dialogController/dialog-view.html',
                     parent: angular.element(document.body),

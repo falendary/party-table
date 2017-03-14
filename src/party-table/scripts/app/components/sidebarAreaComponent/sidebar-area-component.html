@@ -1,12 +1,12 @@
-<div class="g-sidebar-filter-component" layout="column">
+<div class="g-sidebar-filter-component">
 
-    <div layout="row" layout-align="space-between center">
+    <div>
         <p class="area-title g-section-title"><span class="g-meta-circle blue">F</span><span class="after-text">ILTER AREA</span>
         </p>
     </div>
     <div data-ng-if="false">
 
-        <div layout="row" class="filters-control-btn s-f-expanded-btns">
+        <div class="filters-control-btn s-f-expanded-btns">
             <md-button class="md-raised" data-ng-click="selectAll()">
                 Select all
             </md-button>
@@ -14,7 +14,7 @@
                 Deselect all
             </md-button>
         </div>
-        <div layout="row" class="filters-control-btn s-f-expanded-btns">
+        <div class="filters-control-btn s-f-expanded-btns">
             <md-button class="md-raised clear-all full-width" data-ng-click="clearAll()">
                 Clear all
             </md-button>
@@ -23,13 +23,19 @@
     </div>
 
     <div dragula="'filters-bag'" dragula-model="filters" class="filters-holder">
-        <md-card data-ng-repeat="filter in filters"
-                 class="{{filter.options.enabled ? '' : 'f-disabled' }} g-filter-item" layout="row">
-            <div flex="15">
-                <input type="checkbox" ng-model="filter.options.enabled" aria-label="filters" class="md-primary"
-                             ng-change="toggleFilterState(filter)" >
+        <div data-ng-repeat="filter in filters"
+             class="{{filter.options.enabled ? '' : 'f-disabled' }} g-filter-item pt-card pt-filter-card">
+            <div class="pt-fc-checkbox-section">
+                <div class="pt-checkbox-control">
+                    <label>
+                        <input type="checkbox" ng-model="filter.options.enabled" aria-label="filters"
+                               ng-change="toggleFilterState(filter)">
+                        <span class="pt-checkbox-span"><span class="pt-checkbox-span-check"></span></span>
+                    </label>
+                </div>
             </div>
-            <md-input-container flex="65">
+            <div class="pt-fc-input-section">
+
                 <label data-ng-bind="filter.name"></label>
                 <div data-ng-if="getFilterType(filter['value_type'])">
                     <!-- {{fields}} -->
@@ -52,7 +58,7 @@
                         </md-select>
                     </div>
                     <div data-ng-if="!fields[filter.key]">
-                        <div layout="row" layout-sm="column" layout-align="space-around">
+                        <div>
                             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                         </div>
                     </div>
@@ -62,46 +68,49 @@
                     <input data-ng-model="filter.options.query" data-ng-change="filterChange(filter)"
                            data-ng-model-options="{debounce: 1000}">
                 </div>
-            </md-input-container>
-            <div class="settings-btn" flex="20">
-                <md-menu data-ng-if="options.isRootEntityViewer">
-                    <md-button aria-label="Open phone interactions menu" class="md-icon-button"
-                               ng-click="openFilterSettings($mdOpenMenu, $event)">
-                        <ng-md-icon icon="settings"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="3">
-                        <md-menu-item>
-                            <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
-                                <ng-md-icon icon="visibility_off"></ng-md-icon>
-                                <span>Remove</span>
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-                <md-menu data-ng-if="!options.isRootEntityViewer && false">
-                    <md-button aria-label="Open phone interactions menu" class="md-icon-button"
-                               ng-click="openFilterSettings($mdOpenMenu, $event)">
-                        <ng-md-icon icon="settings"></ng-md-icon>
-                    </md-button>
-                    <md-menu-content width="3">
-                        <md-menu-item>
-                            <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
-                                <ng-md-icon icon="visibility_off"></ng-md-icon>
-                                <span>Remove</span>
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="useFromAbove(filter)" class="g-settings-option-btn">
-                                <ng-md-icon icon="done" data-ng-show="filter.options.useFromAbove"></ng-md-icon>
-                                <ng-md-icon icon="done" style="visibility: hidden;"
-                                            data-ng-show="!filter.options.useFromAbove"></ng-md-icon>
-                                <span>Use from above</span>
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+
             </div>
-        </md-card>
+            <div class="pt-fc-settings-section">
+                <div class="settings-btn">
+                    <md-menu data-ng-if="options.isRootEntityViewer">
+                        <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                                   ng-click="openFilterSettings($mdOpenMenu, $event)">
+                            <ng-md-icon icon="settings"></ng-md-icon>
+                        </md-button>
+                        <md-menu-content width="3">
+                            <md-menu-item>
+                                <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
+                                    <ng-md-icon icon="visibility_off"></ng-md-icon>
+                                    <span>Remove</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-menu data-ng-if="!options.isRootEntityViewer && false">
+                        <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                                   ng-click="openFilterSettings($mdOpenMenu, $event)">
+                            <ng-md-icon icon="settings"></ng-md-icon>
+                        </md-button>
+                        <md-menu-content width="3">
+                            <md-menu-item>
+                                <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
+                                    <ng-md-icon icon="visibility_off"></ng-md-icon>
+                                    <span>Remove</span>
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button ng-click="useFromAbove(filter)" class="g-settings-option-btn">
+                                    <ng-md-icon icon="done" data-ng-show="filter.options.useFromAbove"></ng-md-icon>
+                                    <ng-md-icon icon="done" style="visibility: hidden;"
+                                                data-ng-show="!filter.options.useFromAbove"></ng-md-icon>
+                                    <span>Use from above</span>
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="drop-new-filter" data-ng-if="options.interface.dragging">
         Drop new Filter

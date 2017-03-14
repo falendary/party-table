@@ -1,6 +1,337 @@
 .pt-app * {
   box-sizing: content-box;
 }
+.pt-app .pt-card {
+  box-sizing: border-box;
+  margin: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #ffffff;
+  border-radius: 2px;
+}
+.pt-app .pt-filter-card {
+  padding: 8px;
+}
+.pt-app .pt-filter-card .pt-fc-checkbox-section {
+  float: left;
+  width: 20%;
+}
+.pt-app .pt-filter-card .pt-fc-input-section {
+  float: left;
+  width: 60%;
+}
+.pt-app .pt-filter-card .pt-fc-input-section input {
+  margin-bottom: 0;
+  height: 24px;
+}
+.pt-app .pt-filter-card .pt-fc-settings-section {
+  float: left;
+  width: 20%;
+}
+.pt-app .pt-filter-card:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.pt-app .pt-checkbox-control {
+  display: inline-block;
+  margin: 8px;
+  box-sizing: border-box;
+  transform: translateZ(0);
+}
+.pt-app .pt-checkbox-control label {
+  cursor: pointer;
+  padding-left: 0;
+}
+.pt-app .pt-checkbox-control input[type=checkbox] {
+  opacity: 0;
+  position: absolute;
+  margin: 0;
+  z-index: -1;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  left: 0;
+  pointer-events: none;
+}
+.pt-app .pt-checkbox-control .pt-checkbox-span {
+  vertical-align: middle;
+  position: relative;
+  box-sizing: border-box;
+  top: 3px;
+}
+.pt-app .pt-checkbox-control .pt-checkbox-span:before {
+  position: absolute;
+  left: 8px;
+  top: 2px;
+  content: "";
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 4px;
+  width: 4px;
+  border-radius: 100%;
+  z-index: 1;
+  opacity: 0;
+  margin: 0;
+}
+.pt-app .pt-checkbox-control .pt-checkbox-span .pt-checkbox-span-check {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  box-sizing: border-box;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 2px;
+  overflow: hidden;
+  z-index: 1;
+}
+.pt-app .pt-checkbox-control .pt-checkbox-span .pt-checkbox-span-check:before {
+  position: absolute;
+  content: "";
+  transform: rotate(45deg);
+  display: block;
+  margin-top: -4px;
+  margin-left: 6px;
+  width: 0;
+  height: 0;
+  box-shadow: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 inset;
+  animation: checkbox-off 0.3s forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:focus + .pt-checkbox-span .pt-checkbox-span-check:after {
+  opacity: 0.2;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:checked + .pt-checkbox-span .pt-checkbox-span-check:before {
+  box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+  animation: checkbox-on 0.3s forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:not(:checked) + .pt-checkbox-span:before {
+  animation: rippleOff 700ms forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:checked + .pt-checkbox-span:before {
+  animation: rippleOn 700ms forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:not(:checked) + .pt-checkbox-span .pt-checkbox-span-check:after {
+  animation: rippleOff 700ms forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox]:checked + .pt-checkbox-span .pt-checkbox-span-check:after {
+  animation: rippleOn 700ms forwards ease-out;
+}
+.pt-app .pt-checkbox-control input[type=checkbox][disabled]:not(:checked) ~ .pt-checkbox-span .pt-checkbox-span-check:before,
+.pt-app .pt-checkbox-control input[type=checkbox][disabled] + .circle {
+  opacity: 0.5;
+}
+.pt-app .pt-checkbox-control input[type=checkbox][disabled] + .pt-checkbox-span .pt-checkbox-span-check:after {
+  background-color: rgba(0, 0, 0, 0.84);
+  transform: rotate(-45deg);
+}
+.pt-app .coloured .pt-checkbox-span .pt-checkbox-span-check {
+  color: #2FAEF8;
+}
+.pt-app .coloured .pt-checkbox-span:before {
+  background-color: #2FAEF8;
+}
+.pt-app .coloured input[type=checkbox]:checked + .pt-checkbox-span .pt-checkbox-span-check {
+  color: #2FAEF8;
+}
+@keyframes checkbox-on {
+  0% {
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+  }
+  50% {
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+  }
+  100% {
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+  }
+}
+@keyframes checkbox-off {
+  0% {
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px, 0 0 0 0 inset;
+  }
+  25% {
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px, 0 0 0 0 inset;
+  }
+  50% {
+    transform: rotate(45deg);
+    margin-top: -4px;
+    margin-left: 6px;
+    width: 0px;
+    height: 0px;
+    box-shadow: 0 0 0 10px, 10px -10px 0 10px, 32px 0px 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px, 0 0 0 0 inset;
+  }
+  51% {
+    transform: rotate(0deg);
+    margin-top: -2px;
+    margin-left: -2px;
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0px 0px 0 10px inset;
+  }
+  100% {
+    transform: rotate(0deg);
+    margin-top: -2px;
+    margin-left: -2px;
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0 0 0 0,
+      0px 0px 0 0px inset;
+  }
+}
+@keyframes rippleOn {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
+  }
+}
+@keyframes rippleOff {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(13, 13);
+  }
+}
+.pt-app .pt-dropdown {
+  position: relative;
+}
+.pt-app .pt-dropdown .pt-dropdown-content {
+  background-color: #fff;
+  margin: 0;
+  min-width: 100px;
+  max-height: 650px;
+  overflow-y: auto;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 999;
+  transition: all 0.3s ease;
+  transform: scale(0);
+  will-change: width, height;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.pt-app .pt-dropdown .pt-dropdown-content.active {
+  transform: scale(1);
+  opacity: 1;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li {
+  clear: both;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: pointer;
+  min-height: 50px;
+  line-height: 1.5rem;
+  width: 100%;
+  text-align: left;
+  text-transform: none;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li:hover,
+.pt-app .pt-dropdown .pt-dropdown-content li.active,
+.pt-app .pt-dropdown .pt-dropdown-content li.selected {
+  background-color: #eee;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li.active.selected {
+  background-color: #e1e1e1;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li.divider {
+  min-height: 0;
+  height: 1px;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li > a,
+.pt-app .pt-dropdown .pt-dropdown-content li > span {
+  font-size: 16px;
+  color: #26a69a;
+  display: block;
+  line-height: 22px;
+  padding: 14px 16px;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li > span > label {
+  top: 1px;
+  left: 0;
+  height: 18px;
+}
+.pt-app .pt-dropdown .pt-dropdown-content li > a > i {
+  height: inherit;
+  line-height: inherit;
+}
+.pt-app .pt-dropdown .pt-dropdown-content .input-field.col [type="checkbox"] + label {
+  top: 1px;
+  left: 0;
+  height: 18px;
+}
+.pt-app .pt-button {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 88px;
+  line-height: 36px;
+  vertical-align: middle;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none;
+  border: 0;
+  padding: 0 6px;
+  margin: 6px 8px;
+  background: transparent;
+  color: currentColor;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: inherit;
+  font-variant: inherit;
+  font-family: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.pt-app .pt-round-button {
+  z-index: 20;
+  line-height: 56px;
+  min-width: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-clip: padding-box;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+  transition-property: background-color, box-shadow, -webkit-transform;
+  transition-property: background-color, box-shadow, transform;
+}
+.pt-app .pt-icon-button {
+  margin: 0 6px;
+  height: 24px;
+  min-width: 0;
+  box-sizing: border-box;
+  line-height: 24px;
+  padding: 2px;
+  width: 24px;
+  min-height: 24px;
+  border-radius: 50%;
+}
 .g-wrapper {
   overflow: hidden;
 }
@@ -80,6 +411,7 @@
   position: absolute;
   right: 0;
   z-index: 0;
+  height: 100%;
   width: 239px;
   min-width: 235px;
 }
@@ -111,9 +443,6 @@
 }
 .g-wrapper .g-table-section {
   background-color: #fff;
-  overflow: hidden;
-}
-.g-wrapper .g-thead {
   overflow: hidden;
 }
 .g-wrapper .g-thead:after {
@@ -374,47 +703,6 @@
   background-color: #DCDCDC;
   overflow: hidden;
 }
-.drag-dialog .g-modal-dialog {
-  max-width: none;
-  width: 440px;
-}
-.drag-dialog .g-modal-dialog.md-transition-in {
-  transition: none;
-  transform: none;
-  overflow: hidden;
-}
-.drag-dialog .g-modal-dialog .draggable-dialog {
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: move;
-  transform: rotate(-140deg);
-  right: -5px;
-  position: absolute;
-  top: -7px;
-}
-.drag-dialog .g-modal-dialog md-toolbar {
-  height: 32px;
-  min-height: 32px;
-}
-.drag-dialog .g-modal-dialog .md-toolbar-tools {
-  cursor: move;
-  height: 100%;
-}
-.drag-dialog .g-modal-dialog .g-checkbox-row div:first-of-type {
-  padding-top: 8px;
-}
-.drag-dialog .g-modal-dialog .g-checkbox-row md-card {
-  width: 250px;
-  display: inline-block;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: .5em;
-  padding-bottom: .5em;
-  margin-top: 0;
-}
-.drag-dialog .g-modal-dialog .g-checkbox-row md-checkbox.md-g-green.md-checked .md-icon {
-  background-color: #58BF64;
-}
 .g-settings-option-btn ng-md-icon {
   position: relative;
   top: 6px;
@@ -423,6 +711,7 @@
 .g-meta-circle {
   width: 18px;
   height: 18px;
+  line-height: 18px;
   color: #fff;
   text-align: center;
   display: inline-block;
@@ -463,102 +752,6 @@
   border-right: 1px solid #363636;
   margin-right: 2px;
 }
-.g-column-content {
-  padding: 4px 21px 4px 8px;
-  height: 16px;
-  margin: 0 8px;
-  overflow: visible;
-  position: relative;
-  background-color: #ffffff;
-  border-radius: 2px;
-  cursor: grab;
-}
-.g-column-content:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-.g-column-content:hover .column-name-tooltip-wrap {
-  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
-  opacity: 1;
-}
-.g-cell.g-column {
-  float: left;
-  display: block;
-  position: relative;
-  margin: 3px 0 5px 0;
-  overflow: visible;
-  background-color: transparent;
-  height: auto;
-  padding: 0;
-  min-width: 50px;
-}
-.g-cell.g-column:first-child {
-  margin-left: 2px;
-}
-.g-cell.g-column .column-left-content {
-  float: left;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-}
-.g-cell.g-column .sort {
-  display: inline;
-  vertical-align: top;
-}
-.g-cell.g-column .sort .md-button {
-  position: relative;
-  top: -7px;
-}
-.g-cell.g-column .column-sort {
-  min-width: 0;
-  width: 20px;
-}
-.g-cell.g-column .column-sort.column-both-sorted {
-  opacity: 0;
-}
-.g-cell.g-column .column-sort.column-both-sorted:hover {
-  opacity: 1;
-}
-.g-cell.g-column .column-sort-up {
-  top: -8px;
-  min-width: 0;
-  width: 20px;
-}
-.g-cell.g-column .caption {
-  display: inline;
-  color: #0C0C0C;
-  font-size: .8em;
-  margin-left: 4px;
-  margin-right: 4px;
-  vertical-align: top;
-}
-.g-cell.g-column .settings-btn {
-  position: absolute;
-  right: 3px;
-}
-.g-cell.g-column .settings-btn ng-md-icon {
-  top: 0;
-}
-.g-cell.g-column .column-btns {
-  opacity: .5;
-  min-width: auto;
-  /* line-height: 1; */
-  fill: #767676;
-  padding: 0;
-  height: 20px;
-  margin: 0;
-  min-height: 20px;
-  width: 20px;
-}
-.g-cell.g-column .column-btns:hover {
-  opacity: 1;
-  background: transparent;
-}
-.g-cell.g-column .column-btns svg {
-  height: 16px;
-  width: 16px;
-}
 .drag-dialog .md-scroll-mask {
   display: none;
 }
@@ -573,7 +766,6 @@ body.md-dialog-is-showing {
   float: left;
   display: block;
   height: 2em;
-  overflow: hidden;
 }
 .group-item .add .md-button {
   fill: #767676;
@@ -620,71 +812,6 @@ body.md-dialog-is-showing {
 }
 .group-item > div {
   float: left;
-}
-.group-row-fold-holder {
-  width: 16px;
-  height: 16px;
-  float: left;
-  margin: 4px 5px 0 0;
-}
-.group-row-fold-holder md-card {
-  margin: 0;
-  width: 100%;
-}
-.group-row-fold-holder .md-button {
-  min-width: 0;
-  margin-right: 0;
-  margin-left: 0;
-  width: 16px;
-  padding: 0;
-  line-height: 1;
-  height: 16px;
-  min-height: 0;
-  margin: 0;
-  fill: #767676;
-  position: relative;
-  top: -5px;
-}
-.group-row-fold-holder svg {
-  height: 16px;
-  width: 16px;
-}
-.group-folding-holder {
-  width: 64px;
-  float: left;
-  margin-right: 10px;
-}
-.group-folding-holder md-card {
-  width: 100%;
-}
-.group-folding-holder .fold-btn-wrap {
-  float: left;
-}
-.group-folding-holder .fold-btn-wrap.disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-.group-folding-holder .fold-btn-wrap.disabled .md-button {
-  pointer-events: none;
-  background: rgba(158, 158, 158, 0.2);
-}
-.group-folding-holder .grouping-fold-btn {
-  min-width: 0;
-  width: 32px;
-}
-.group-folding-holder .md-button {
-  min-width: auto;
-  margin-right: 0;
-  margin-left: 0;
-  width: 32px;
-  line-height: 1;
-  height: 32px;
-  min-height: 0;
-  margin: 0;
-}
-.group-folding-holder svg {
-  height: 1.5em;
-  width: 1.5em;
 }
 .modal-dialog-card {
   display: inline-block;
@@ -1118,4 +1245,273 @@ body.md-dialog-is-showing {
 }
 .folded-root-item .g-cell-wrap.ng-scope {
   font-weight: bold;
+}
+.pt-app .pt-column-card .pt-cc-wrap {
+  height: 24px;
+  margin: 0 8px;
+  overflow: visible;
+  box-sizing: border-box;
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 2px;
+  cursor: grab;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.pt-app .pt-column-card .pt-cc-wrap:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.pt-app .pt-column-card .pt-cc-wrap:hover .column-name-tooltip-wrap {
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;
+  opacity: 1;
+}
+.pt-app .pt-column-card .pt-cc-name-section {
+  display: flex;
+  line-height: 24px;
+  width: 100%;
+  height: 100%;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.pt-app .pt-column-card .pt-cc-settings-section {
+  display: flex;
+  box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 40px;
+}
+.pt-app .pt-column-card .pt-cc-settings-section .pt-dropdown > .pt-icon-button {
+  line-height: 20px;
+  color: #767676;
+}
+.pt-app .g-cell.g-column {
+  float: left;
+  display: block;
+  position: relative;
+  margin: 3px 0 5px 0;
+  overflow: visible;
+  background-color: transparent;
+  height: auto;
+  padding: 0;
+  min-width: 50px;
+}
+.pt-app .g-cell.g-column:first-child {
+  margin-left: 2px;
+}
+.pt-app .g-cell.g-column .column-left-content {
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.pt-app .g-cell.g-column .sort {
+  display: inline;
+  vertical-align: top;
+}
+.pt-app .g-cell.g-column .sort .md-button {
+  position: relative;
+  top: -7px;
+}
+.pt-app .g-cell.g-column .column-sort {
+  min-width: 0;
+  width: 20px;
+}
+.pt-app .g-cell.g-column .column-sort.column-both-sorted {
+  opacity: 0;
+}
+.pt-app .g-cell.g-column .column-sort.column-both-sorted:hover {
+  opacity: 1;
+}
+.pt-app .g-cell.g-column .column-sort-up {
+  top: -8px;
+  min-width: 0;
+  width: 20px;
+}
+.pt-app .g-cell.g-column .caption {
+  display: inline;
+  color: #0C0C0C;
+  font-size: .8em;
+  margin-left: 4px;
+  margin-right: 4px;
+  vertical-align: top;
+}
+.pt-app .g-cell.g-column .settings-btn {
+  position: absolute;
+  right: 3px;
+}
+.pt-app .g-cell.g-column .settings-btn ng-md-icon {
+  top: 0;
+}
+.pt-app .g-cell.g-column .column-btns {
+  opacity: .5;
+  min-width: auto;
+  /* line-height: 1; */
+  fill: #767676;
+  padding: 0;
+  height: 20px;
+  margin: 0;
+  min-height: 20px;
+  width: 20px;
+}
+.pt-app .g-cell.g-column .column-btns:hover {
+  opacity: 1;
+  background: transparent;
+}
+.pt-app .g-cell.g-column .column-btns svg {
+  height: 16px;
+  width: 16px;
+}
+.pt-app .g-grouping-component .pt-round-button {
+  background: #4C334D;
+  width: 38px;
+  height: 38px;
+  line-height: 38px;
+}
+.pt-app .g-grouping-component .pt-round-button i {
+  color: #fff;
+}
+.pt-app .group-row-fold-holder {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  float: left;
+  margin: 4px 5px 0 0;
+}
+.pt-app .group-row-fold-holder md-card {
+  margin: 0;
+  width: 100%;
+}
+.pt-app .group-row-fold-holder .pt-button {
+  min-width: 0;
+  margin-right: 0;
+  margin-left: 0;
+  width: 16px;
+  padding: 0;
+  line-height: 1;
+  height: 16px;
+  min-height: 0;
+  margin: 0;
+  fill: #767676;
+  position: relative;
+  top: -8px;
+}
+.pt-app .group-row-fold-holder .pt-button i {
+  color: #767676;
+  font-size: 10px;
+  line-height: 1;
+}
+.pt-app .group-row-fold-holder svg {
+  height: 16px;
+  width: 16px;
+}
+.pt-app .group-folding-holder {
+  width: 64px;
+  float: left;
+  margin-right: 10px;
+}
+.pt-app .group-folding-holder md-card {
+  width: 100%;
+}
+.pt-app .group-folding-holder .fold-btn-wrap {
+  float: left;
+}
+.pt-app .group-folding-holder .fold-btn-wrap.disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+.pt-app .group-folding-holder .fold-btn-wrap.disabled .md-button {
+  pointer-events: none;
+  background: rgba(158, 158, 158, 0.2);
+}
+.pt-app .group-folding-holder .grouping-fold-btn {
+  min-width: 0;
+  width: 32px;
+}
+.pt-app .group-folding-holder .pt-button {
+  min-width: auto;
+  margin-right: 0;
+  margin-left: 0;
+  width: 32px;
+  line-height: 1;
+  height: 32px;
+  min-height: 0;
+  margin: 0;
+}
+.pt-app .group-folding-holder .pt-button i {
+  color: #767676;
+}
+.pt-app .group-folding-holder svg {
+  height: 1.5em;
+  width: 1.5em;
+}
+.pt-app.pt-dialog {
+  position: absolute;
+  left: 50%;
+  top: 160px;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+}
+.pt-app.pt-dialog .pt-dialog-header {
+  height: 32px;
+  min-height: 32px;
+  padding: 4px;
+  box-sizing: border-box;
+  background-color: #4C334D;
+}
+.pt-app.pt-dialog .pt-dialog-header h2 {
+  font-size: 18px;
+  color: #fff;
+  line-height: 20px;
+  padding-left: 4px;
+  margin: 0;
+}
+.pt-app.pt-dialog .pt-dialog-body {
+  padding: 16px;
+}
+.drag-dialog .g-modal-dialog {
+  max-width: none;
+  width: 440px;
+}
+.drag-dialog .g-modal-dialog.md-transition-in {
+  transition: none;
+  transform: none;
+  overflow: hidden;
+}
+.drag-dialog .g-modal-dialog .draggable-dialog {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: move;
+  transform: rotate(-140deg);
+  right: -5px;
+  position: absolute;
+  top: -7px;
+}
+.drag-dialog .g-modal-dialog md-toolbar {
+  height: 32px;
+  min-height: 32px;
+}
+.drag-dialog .g-modal-dialog .md-toolbar-tools {
+  cursor: move;
+  height: 100%;
+}
+.drag-dialog .g-modal-dialog .g-checkbox-row div:first-of-type {
+  padding-top: 8px;
+}
+.drag-dialog .g-modal-dialog .g-checkbox-row md-card {
+  width: 250px;
+  display: inline-block;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  margin-top: 0;
+}
+.drag-dialog .g-modal-dialog .g-checkbox-row md-checkbox.md-g-green.md-checked .md-icon {
+  background-color: #58BF64;
 }

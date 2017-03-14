@@ -156,7 +156,7 @@
                         e.preventDefault();
                         e.stopPropagation();
 
-                        var parent = $(this).parents('md-card.g-cell.g-column');
+                        var parent = $(this).parents('.pt-card.g-cell.g-column');
                         var width = parent.width();
                         var minWidth = parent.attr('min-width');
                         var newWidth;
