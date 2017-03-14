@@ -7,14 +7,23 @@
 
     module.exports = function ($rootScope, $controller, $compile, $templateCache) {
 
+        var dialogTemplate;
+        var templateScope;
+        var templateCtrl;
+        var dialogElement;
+
         var create = function (options) {
 
-            var dialogTemplate = $templateCache.get(options.templateUrl);
+            if (dialogElement) {
+                dialogElement.html('');
+            }
 
-            var templateScope = $rootScope.$new(true);
-            var templateCtrl = $controller(options.controller, {$scope: templateScope, data: options.locals.data});
+            dialogTemplate = $templateCache.get(options.templateUrl);
 
-            var dialogElement = angular.element(dialogTemplate);
+            templateScope = $rootScope.$new(true);
+            templateCtrl = $controller(options.controller, {$scope: templateScope, data: options.locals.data});
+
+            dialogElement = angular.element(dialogTemplate);
 
             dialogElement.children().data('$ngControllerController', templateCtrl);
 
@@ -24,8 +33,24 @@
 
         };
 
+        var hide = function (options) {
+
+            dialogElement.html('');
+
+            return new Promise(function (resolve, reject) {
+                resolve(options);
+            })
+        };
+
+        var cancel = function () {
+            dialogElement.html('');
+        };
+
+
         return {
-            create: create
+            create: create,
+            hide: hide,
+            cancel: cancel
         };
 
 

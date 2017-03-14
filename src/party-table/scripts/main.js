@@ -13,6 +13,7 @@ app.component('columnArea', require('./app/components/columnAreaComponent/column
 app.directive('columnResize', [require('./app/directives/columnResizeDirective/columnResizeDirective.js')]);
 app.directive('columnInitWidth', [require('./app/directives/columnInitWidthDirective/columnInitWidthDirective.js')]);
 app.directive('dropdown', [require('./app/directives/dropdownDirective/dropdownDirective.js')]);
+app.directive('dragDialog', [require('./app/directives/dragDialogDirective/dragDialogDirective')]);
 
 app.service('ptDialog', ['$rootScope', '$controller', '$compile', '$templateCache', require('./app/services/ptDialogService')]);
 
@@ -20,7 +21,6 @@ app.controller('DialogController', ['$scope', 'ptDialog', 'data', require('./app
 
 //app.component('groupClipboardHandler', [require('./app/directives/groupTable/gClipboardHandlerComponent')]);
 //app.component('groupColumnResizer', [require('./app/directives/groupTable/gColumnResizerComponent')]);
-//app.component('gDialogDraggable', [require('./app/directives/groupTable/gDialogDraggableComponent')]);
 //app.component('groupHeightAligner', [require('./app/directives/groupTable/gHeightAlignerComponent')]);
 //app.component('groupVerticalScroll', [require('./app/directives/groupTable/gVerticalScrollComponent')]);
 //app.component('groupHorizontalScroll', [require('./app/directives/groupTable/gHorizontalScrollComponent')]);

@@ -7,7 +7,7 @@
 
     var entityService = require('../../services/entityService');
 
-    module.exports = function ($scope, $mdDialog, data) {
+    module.exports = function ($scope, ptDialog, data) {
 
         var vm = this;
         vm.readyStatus = {content: false};
@@ -227,7 +227,7 @@
 
         vm.cancel = function () {
             $('body').removeClass('drag-dialog');
-            $mdDialog.cancel();
+            ptDialog.cancel();
         };
 
         var dragAndDrop = {

@@ -37,6 +37,48 @@
     transition: box-shadow .4s cubic-bezier(.25, .8, .25, 1), background-color .4s cubic-bezier(.25, .8, .25, 1);
   }
 
+  .pt-raised {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+  }
+
+  .pt-ink-ripple {
+    position: relative;
+  }
+
+  .pt-accent {
+    background: #2397F5;
+    color: #fff;
+  }
+
+  .pt-ink-ripple:before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: block;
+    width: 0;
+    padding-top: 0;
+
+    border-radius: 100%;
+
+    background-color: rgba(236, 240, 241, .3);
+
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .pt-ink-ripple:active:before {
+    width: 120%;
+    padding-top: 120%;
+
+    transition: width .2s ease-out, padding-top .2s ease-out;
+  }
+
   .pt-round-button {
     z-index: 20;
     line-height: 56px;

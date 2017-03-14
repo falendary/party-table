@@ -1,5 +1,5 @@
-<div aria-label="Area configuration" ng-cloak class="pt-app pt-dialog g-modal-dialog drag" g-dialog-draggable>
-    <div class="pt-dialog-header">
+<div aria-label="Area configuration" ng-cloak class="pt-app pt-dialog g-modal-dialog draggable-dialog" drag-dialog>
+    <div class="pt-dialog-header pt-drag-target">
         <div class="md-toolbar-tools" layout="row" layout-align="start center">
             <h2 style="user-select: none; position: relative;">View Constructor
             </h2>
@@ -16,8 +16,8 @@
                             <span class="g-meta-circle blue">F</span>
                         </div>
                         <div class="g-checkbox-row" data-ng-repeat="item in entity.attributes">
-                            <div>
-                                <div class="pt-checkbox-control">
+                            <div class="pt-dialog-control-row">
+                                <div class="pt-checkbox-control pt-ds-column-checkbox">
                                     <label>
                                         <input type="checkbox" ng-model="item.columns" aria="columns"
                                                data-ng-change="vm.updateAttrs()">
@@ -25,7 +25,7 @@
                                                 class="pt-checkbox-span-check"></span></span>
                                     </label>
                                 </div>
-                                <div class="pt-checkbox-control">
+                                <div class="pt-checkbox-control pt-ds-group-checkbox">
                                     <label>
                                         <input type="checkbox"
                                                ng-style="vm.checkAreaAccessibility(item, 'group') ? {'visibility': 'hidden'} : {}"
@@ -35,7 +35,7 @@
                                                 class="pt-checkbox-span-check"></span></span>
                                     </label>
                                 </div>
-                                <div class="pt-checkbox-control">
+                                <div class="pt-checkbox-control pt-ds-filter-checkbox">
                                     <label>
                                         <input type="checkbox"
                                                ng-style="vm.checkAreaAccessibility(item, 'filter') ? {'visibility': 'hidden'} : {}"
@@ -60,17 +60,10 @@
             </div>
         </div>
     </div>
-    <md-dialog-actions layout="row" layout-align="space-between center">
-        <md-button data-ng-if="vm.MABtnVisibility(vm.entityType)" class="md-raised md-primary" style="margin: 0;"
-                   data-ui-sref="app.attributesManager({entityType: vm.entityType})" data-ng-click="vm.cancel()">
-            Manage attributes
-        </md-button>
-        <md-button data-ng-if="vm.entityType === 'balance-report'" class="md-raised md-primary" style="margin: 0;"
-                   data-ui-sref="app.reports.balanceCustomAttributesManager" data-ng-click="vm.cancel()">
-            Custom attributes
-        </md-button>
-        <md-button class="md-raised" ng-click="vm.cancel()">
+    <div class="pt-dialog-footer">
+
+        <a class="pt-button pt-raised pt-ink-ripple pt-accent" ng-click="vm.cancel()">
             OK
-        </md-button>
-    </md-dialog-actions>
+        </a>
+    </div>
 </div>

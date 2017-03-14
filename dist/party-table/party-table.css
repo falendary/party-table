@@ -308,6 +308,37 @@
   -webkit-transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
+.pt-app .pt-raised {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+.pt-app .pt-ink-ripple {
+  position: relative;
+}
+.pt-app .pt-accent {
+  background: #2397F5;
+  color: #fff;
+}
+.pt-app .pt-ink-ripple:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0;
+  padding-top: 0;
+  border-radius: 100%;
+  background-color: rgba(236, 240, 241, 0.3);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.pt-app .pt-ink-ripple:active:before {
+  width: 120%;
+  padding-top: 120%;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
+}
 .pt-app .pt-round-button {
   z-index: 20;
   line-height: 56px;
@@ -725,9 +756,6 @@
 }
 .g-meta-circle.red {
   background-color: rgba(255, 64, 129, 0.87);
-}
-.g-th-checkbox-row .g-meta-circle {
-  margin-right: 24px;
 }
 .drag-dialog md-dialog {
   position: absolute;
@@ -1474,6 +1502,35 @@ body.md-dialog-is-showing {
 .pt-app.pt-dialog .pt-dialog-body {
   padding: 16px;
 }
+.pt-app.pt-dialog .pt-dialog-footer {
+  padding: 8px;
+}
+.pt-app.pt-dialog .pt-ds-column-checkbox .pt-checkbox-span {
+  color: #F44336;
+}
+.pt-app.pt-dialog .pt-ds-group-checkbox .pt-checkbox-span {
+  color: #4CAF50;
+}
+.pt-app.pt-dialog .pt-ds-filter-checkbox .pt-checkbox-span {
+  color: #2196F3;
+}
+.pt-app.pt-dialog .pt-dialog-control-row {
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pt-app.pt-dialog .g-th-checkbox-row .g-meta-circle {
+  margin-right: 20px;
+}
+.pt-app.pt-dialog .g-checkbox-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.pt-app.pt-dialog .g-checkbox-row .pt-checkbox-control {
+  margin: 0;
+}
 .drag-dialog .g-modal-dialog {
   max-width: none;
   width: 440px;
@@ -1499,9 +1556,6 @@ body.md-dialog-is-showing {
 .drag-dialog .g-modal-dialog .md-toolbar-tools {
   cursor: move;
   height: 100%;
-}
-.drag-dialog .g-modal-dialog .g-checkbox-row div:first-of-type {
-  padding-top: 8px;
 }
 .drag-dialog .g-modal-dialog .g-checkbox-row md-card {
   width: 250px;
