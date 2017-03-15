@@ -28,19 +28,19 @@
             <div dragula="'group-bag'" dragula-model="grouping">
                 <div data-ng-repeat="item in options.grouping track by $index" class="pt-card group-item">
                     <div class="sort">
-                        <!--<md-button class="group-sort" data-ng-show="item.options.sort === 'ASC'"-->
-                        <!--aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">-->
-                        <!--<ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>-->
-                        <!--</md-button>-->
-                        <!--<md-button class="group-sort-up" data-ng-show="item.options.sort === 'DESC'"-->
-                        <!--aria-label="open settings" data-ng-click="sortHandler(item, 'ASC')">-->
-                        <!--<ng-md-icon icon="keyboard_arrow_up"></ng-md-icon>-->
-                        <!--</md-button>-->
-                        <!--<md-button class="group-sort group-both-sorted" data-ng-show="!item.options.sort"-->
-                        <!--aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">-->
-                        <!--<ng-md-icon class="c-up" icon="keyboard_arrow_up"></ng-md-icon>-->
-                        <!--<ng-md-icon class="c-down" icon="keyboard_arrow_down"></ng-md-icon>-->
-                        <!--</md-button>-->
+                        <a class="group-sort" data-ng-show="item.options.sort === 'ASC'"
+                           aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <a class="group-sort-up" data-ng-show="item.options.sort === 'DESC'"
+                           aria-label="open settings" data-ng-click="sortHandler(item, 'ASC')">
+                            <i class="fa fa-angle-up" aria-hidden="true"></i>
+                        </a>
+                        <a class="group-sort group-both-sorted" data-ng-show="!item.options.sort"
+                           aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">
+                            <i class="fa fa-angle-up" aria-hidden="true"></i>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="caption">{{item.name}}</div>
                     <div class="settings-btn">

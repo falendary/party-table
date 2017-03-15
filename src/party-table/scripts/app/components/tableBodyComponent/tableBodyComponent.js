@@ -53,6 +53,11 @@
             };
 
 
+            $scope.reportItemsProjection = function () {
+                return $scope.reportItems;
+            };
+
+
             //baseAttrs = metaService.getBaseAttrs();
             //
             //
@@ -298,10 +303,6 @@
                 })
             }
 
-            $scope.reportItemsProjection = function () {
-
-                return $scope.reportItems;
-            };
 
             $scope.isSubtotalHided = function (column) {
                 if (column.hasOwnProperty('report_settings') && column.report_settings) {
@@ -965,8 +966,7 @@
 
                 setTimeout(function () {
 
-
-                    $scope.$watchCollection('options.columns', function () {
+                    $scope.$watch('options.lastUpdate', function () {
                         syncGroupsAndColumns();
 
                         if ($scope.grouping_type == 'area') {
@@ -974,20 +974,6 @@
                         }
                     });
 
-                    $scope.$watchCollection('grouping', function () {
-                        syncGroupsAndColumns();
-
-                        if ($scope.grouping_type == 'area') {
-                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
-                        }
-                    });
-
-                    if ($scope.grouping_type == 'area') {
-
-                        $scope.$watch('items', function () {
-                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
-                        });
-                    }
 
                 }, 0)
 

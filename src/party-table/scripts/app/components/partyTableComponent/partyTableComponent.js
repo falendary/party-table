@@ -40,7 +40,10 @@
                 columns: [],
                 filters: [],
                 grouping: [],
-                sorting: [],
+                sorting: {
+                    group: {},
+                    column: {}
+                },
                 folding: [],
                 entity_models: [],
                 grouping_type: 'area',
@@ -55,6 +58,8 @@
                         updateOptions(params.options);
                     }
 
+                    vm.options.lastUpdate = new Date().getTime();
+
                     vm.originalItems = JSON.parse(JSON.stringify(vm.items));
 
                     vm.groupTableService.setItems(vm.originalItems);
@@ -66,16 +71,21 @@
 
                     if (vm.options.grouping_type == 'area') {
                         vm.groupTableService.grouping.setGroupsWithColumns(vm.options.grouping, vm.options.columns, vm.options.entity_models);
+                        vm.groupTableService.sorting.group.sort(vm.options.sorting.group);
                     }
                     if (vm.options.grouping_type == 'breadcrumbs') {
                         vm.groupTableService.grouping.setGroups(vm.options.grouping, vm.options.entity_models);
+                        vm.groupTableService.sorting.group.sort(vm.options.sorting.group);
+                        vm.groupTableService.sorting.column.sort(vm.options.sorting.column);
                     }
                     //console.log("EXTERNAL CALLBACK ", vm.folding);
                     //vm.groupTableService.folding.setFolds(vm.options.folding);
                     //console.log('UPDATE TABLE scope.sorting.group', vm.sorting.group);
 
-                    //vm.groupTableService.sorting.group.sort(vm.options.sorting.group);
-                    //vm.groupTableService.sorting.column.sort(vm.options.sorting.column);
+                    //console.log('vm.options', vm.options);
+
+                    //console.log('vm.options.sorting.group', vm.options.sorting.group);
+
 
                     //console.log('projection', vm.groupTableService.projection());
                 },

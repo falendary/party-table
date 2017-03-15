@@ -1244,6 +1244,13 @@ body.md-dialog-is-showing {
 }
 .pt-app .g-grouping-section .g-grouping-component .group-item {
   margin: 4px 4px 8px 4px;
+  padding-left: 4px;
+}
+.pt-app .g-grouping-section .g-grouping-component .group-item .caption {
+  margin-left: 6px;
+}
+.pt-app .g-grouping-section .g-grouping-component .group-item .sort {
+  padding: 4px;
 }
 .pt-app .g-grouping-section .g-grouping-component .pt-round-button {
   background: #3494E6;

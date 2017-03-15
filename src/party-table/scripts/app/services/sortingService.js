@@ -15,6 +15,7 @@
     var groupSort = function (items, sort) {
 
         var i, g, valA, valB;
+
         if (items.length && items[0].groups) {
             //console.log('sort ID', sort);
             items = items.sort(function (a, b) {
@@ -59,7 +60,6 @@
             });
         }
 
-        //console.log("SORTED GROUPS", items);
         return items;
 
     };

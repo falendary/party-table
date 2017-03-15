@@ -122,26 +122,6 @@
                 }, 0)
             });
 
-            $scope.isSortable = function (column) {
-                var b, e;
-                if (baseAttrs && baseAttrs.length) {
-                    for (b = 0; b < baseAttrs.length; b = b + 1) {
-                        if (baseAttrs[b].key === column.key && baseAttrs[b].key !== 'notes') {
-                            return true;
-                        }
-                    }
-                }
-                if (entityAttrs && entityAttrs.length) {
-                    for (e = 0; e < entityAttrs.length; e = e + 1) {
-                        if (entityAttrs[e].key === column.key) {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            };
-
             $scope.removeColumn = function (column) {
                 if (column.id) {
                     $scope.columns = $scope.columns.map(function (item) {

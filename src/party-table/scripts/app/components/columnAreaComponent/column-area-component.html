@@ -13,22 +13,23 @@
                     <div class="pt-cc-wrap">
                         <div class="pt-cc-name-section">
                             <div class="column-left-content">
-                                <div class="sort" data-ng-if="isSortable(column)">
-                                    <!--<md-button class="column-sort column-btns" data-ng-show="column.options.sort === 'ASC'"-->
-                                    <!--aria-label="open settings" data-ng-click="sortHandler(column, 'DESC')">-->
-                                    <!--<ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>-->
-                                    <!--</md-button>-->
-                                    <!--<md-button class="column-sort-up column-btns"-->
-                                    <!--data-ng-show="column.options.sort === 'DESC'" aria-label="open settings"-->
-                                    <!--data-ng-click="sortHandler(column, 'ASC')">-->
-                                    <!--<ng-md-icon icon="keyboard_arrow_up"></ng-md-icon>-->
-                                    <!--</md-button>-->
-                                    <!--<md-button class="column-sort column-both-sorted column-btns"-->
-                                    <!--data-ng-show="!column.options.sort" aria-label="open settings"-->
-                                    <!--data-ng-click="sortHandler(column, 'DESC')">-->
-                                    <!--<ng-md-icon class="c-up" icon="keyboard_arrow_up"></ng-md-icon>-->
-                                    <!--<ng-md-icon class="c-down" icon="keyboard_arrow_down"></ng-md-icon>-->
-                                    <!--</md-button>-->
+                                <div class="sort">
+                                    <a class="column-sort column-btns"
+                                       data-ng-show="column.options.sort === 'ASC'"
+                                       aria-label="open settings" data-ng-click="sortHandler(column, 'DESC')">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a class="column-sort-up column-btns"
+                                       data-ng-show="column.options.sort === 'DESC'" aria-label="open settings"
+                                       data-ng-click="sortHandler(column, 'ASC')">
+                                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                    </a>
+                                    <a class="column-sort column-both-sorted column-btns"
+                                       data-ng-show="!column.options.sort" aria-label="open settings"
+                                       data-ng-click="sortHandler(column, 'DESC')">
+                                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </a>
                                 </div>
                                 <div class="caption">
                                     {{column.name}}

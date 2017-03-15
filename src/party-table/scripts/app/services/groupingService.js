@@ -285,7 +285,7 @@
 
         function recursiveWalker(items, groups, entityTypes, level, options) {
 
-            console.log('options', options);
+            //console.log('options', options);
             //console.log('level', level);
 
             var setGroupOptions = {
