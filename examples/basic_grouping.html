@@ -27,75 +27,119 @@
     <textarea id="code" name="code" style="display: none;">
 option = {
     items: [
-        {
-            name: 'Russia',
-            population: 146000000,
-            area: 17075200
-        }, {
-            name: 'USA',
-            population: 320000000,
-            area: 3796742
-        },
-        {
-            name: 'Germany',
-            population: 80000000,
-            area: 357168
-        },
-        {
-            name: 'France',
-            population: 66000000,
-            area: 643801
-        },
-        {
-            name: 'Italy',
-            population: 60000000,
-            area: 301338
+            {
+                country: 'Russia',
+                name: 'Moscow',
+                population: 17900000,
+                area: 2511
+            },
+            {
+                country: 'Russia',
+                name: 'St.Petersburg',
+                population: 4991566,
+                area: 1439
+            }, {
+                country: 'Russia',
+                name: 'Vladivostok',
+                population: 598927,
+                area: 331
+            },{
+                country: 'USA',
+                name: 'New York',
+                population: 19795791,
+                area: 789
+            },{
+                country: 'USA',
+                name: 'Washington, D.C.',
+                population: 658893,
+                area: 177
+            },{
+                country: 'USA',
+                name: 'Boston',
+                population: 645966,
+                area: 232
+            },{
+                country: 'Germany',
+                name: 'Berlin',
+                population: 3502000,
+                area: 891
+            },{
+                country: 'Germany',
+                name: 'Leipzig',
+                population: 3502000,
+                area: 891
+            },{
+                country: 'France',
+                name: 'Paris',
+                population: 2244000,
+                area: 105
+
+            },{
+                country: 'France',
+                name: 'Marseille',
+                population: 855393,
+                area: 240
+
+            },{
+                country: 'Italy',
+                name: 'Rome',
+                population: 2627000,
+                area: 1285
+            }],
+        grouping_type: 'area',
+        entity_models: [{
+            name: 'default',
+            attributes: [
+                {
+                    key: "country",
+                    name: "Country",
+                    value_type: "string"
+                },
+                {
+                    key: "name",
+                    name: "Name",
+                    value_type: "string"
+                },
+                {
+                    key: "population",
+                    name: "Population",
+                    value_type: "integer"
+                },
+                {
+                    key: "area",
+                    name: "Area",
+                    value_type: "integer"
+                }
+
+            ]
         }],
-    grouping_type: 'breadcrumbs',
-    entity_models: [{
-        name: 'default',
-        attributes: [
+        filters: [{
+            key: 'name',
+            name: 'Name'
+        }],
+        grouping: [
+            {
+                key: 'country',
+                name: 'Country'
+            }
+        ],
+        columns: [
+            {
+                key: 'country',
+                name: 'Country',
+            },
             {
                 key: 'name',
-                name: 'Name',
-                value_type: 'string'
+                name: 'Name'
             },
             {
                 key: 'population',
-                name: 'Population',
-                value_type: 'integer'
+                name: 'Population'
             },
             {
                 key: 'area',
-                name: 'Area',
-                value_type: 'integer'
-            }
-
-        ]
-    }],
-    filters: [{
-        key: 'name',
-        name: 'Name'
-    }],
-    grouping: [
-        {
-            key: 'name',
-            name: 'Name'
-        }
-    ],
-    columns: [
-        {
-            key: 'name',
-            name: 'Name'
-        },
-        {
-            key: 'population',
-            name: 'Population'
-        },
-        {
-            key: 'area',
-            name: 'Area'
-        }]
+                name: 'Area'
+            }]
 }
     </textarea>
         </div>
@@ -105,7 +149,7 @@ option = {
 
         <div class="row">
             <div class="col s12">
-                <h4 class="header">Basic example</h4>
+                <h4 class="header">Basic grouping</h4>
                 <div class="example-wrap">
                     <div data-ng-if="!vm.processing">
                         <party-table options="vm.options"></party-table>

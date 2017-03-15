@@ -43,6 +43,7 @@
                 sorting: [],
                 folding: [],
                 entity_models: [],
+                grouping_type: 'area',
                 interface: {
                     dragging: false
                 },
@@ -60,7 +61,15 @@
 
                     vm.groupTableService.columns.setColumns(vm.options.columns);
                     vm.groupTableService.filtering.setFilters(vm.options.filters);
-                    vm.groupTableService.grouping.setGroups(vm.options.grouping, vm.options.entity_models);
+
+                    //console.log('vm.options.grouping_type', vm.options.grouping_type);
+
+                    if (vm.options.grouping_type == 'area') {
+                        vm.groupTableService.grouping.setGroupsWithColumns(vm.options.grouping, vm.options.columns, vm.options.entity_models);
+                    }
+                    if (vm.options.grouping_type == 'breadcrumbs') {
+                        vm.groupTableService.grouping.setGroups(vm.options.grouping, vm.options.entity_models);
+                    }
                     //console.log("EXTERNAL CALLBACK ", vm.folding);
                     //vm.groupTableService.folding.setFolds(vm.options.folding);
                     //console.log('UPDATE TABLE scope.sorting.group', vm.sorting.group);
@@ -104,6 +113,9 @@
             }
 
             this.$onInit = function () {
+
+                console.log('Init party table');
+
                 vm.items = vm.options.items;
                 vm.options = extendDefaults(vm.options, defaultOptions);
 

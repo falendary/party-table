@@ -9,52 +9,54 @@
     <div data-ng-show="checkReady()" ng-cloak>
         <div>
             <div data-ng-if="options.grouping.length" contextmenu-container="gtbody.contextmenu">
-                <div data-ng-if="!options.isReport" data-ng-repeat="item in itemsProjection()">
-                    <div class="g-group-holder {{ checkRowSelection(item) ? 'selected-row' : '' }}">
-                        <div class="g-row-selection" data-ng-click="toggleSelectRow($event, item)">
-                            <ng-md-icon icon="done" data-ng-show="item.selectedRow"></ng-md-icon>
-                        </div>
-                        <div class="pt-card group-row-fold-holder">
-                            <div>
-                                <a class="pt-button" aria-label="hide/show grouping" data-ng-show="item.isFolded"
-                                   data-ng-click="toggleGroupFold(item)">
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                                <a class="pt-button" aria-label="hide/show grouping" data-ng-show="!item.isFolded"
-                                   data-ng-click="toggleGroupFold(item)">
-                                    <i class="fa fa-minus"></i>
-                                </a>
+                <div data-ng-if="options.grouping_type == 'breadcrumbs'">
+                    <div data-ng-repeat="item in itemsProjection()">
+                        <div class="g-group-holder {{ checkRowSelection(item) ? 'selected-row' : '' }}">
+                            <div class="g-row-selection" data-ng-click="toggleSelectRow($event, item)">
+                                <ng-md-icon icon="done" data-ng-show="item.selectedRow"></ng-md-icon>
+                            </div>
+                            <div class="pt-card group-row-fold-holder">
+                                <div>
+                                    <a class="pt-button" aria-label="hide/show grouping" data-ng-show="item.isFolded"
+                                       data-ng-click="toggleGroupFold(item)">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a class="pt-button" aria-label="hide/show grouping" data-ng-show="!item.isFolded"
+                                       data-ng-click="toggleGroupFold(item)">
+                                        <i class="fa fa-minus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div data-ng-repeat="group in item.groups track by $index" class="g-group">
+                                <span data-ng-bind="bindGroupValue(group)"></span>
                             </div>
                         </div>
-                        <div data-ng-repeat="group in item.groups track by $index" class="g-group">
-                            <span data-ng-bind="bindGroupValue(group)"></span>
-                        </div>
-                    </div>
-                    <div data-ng-repeat="groupedItem in item.items" contextmenu-item="groupedItem"
-                         data-ng-show="!item.isFolded" data-ng-right-click="$mdOpenMenu($event)"
-                         class="{{ checkRowSelection(groupedItem) ? 'selected-row' : ''}} g-row"
-                         data-ng-click="rowCallback(groupedItem, $event)">
+                        <div data-ng-repeat="groupedItem in item.items" contextmenu-item="groupedItem"
+                             data-ng-show="!item.isFolded" data-ng-right-click="$mdOpenMenu($event)"
+                             class="{{ checkRowSelection(groupedItem) ? 'selected-row' : ''}} g-row"
+                             data-ng-click="rowCallback(groupedItem, $event)">
 
-                        <div class="g-row-selection" data-ng-click="toggleSelectRow($event, groupedItem)">
-                            <ng-md-icon icon="done" data-ng-show="groupedItem.selectedRow"></ng-md-icon>
-                        </div>
+                            <div class="g-row-selection" data-ng-click="toggleSelectRow($event, groupedItem)">
+                                <ng-md-icon icon="done" data-ng-show="groupedItem.selectedRow"></ng-md-icon>
+                            </div>
 
-                        <div class="g-cell-wrap" data-ng-repeat="column in columns">
-                            <div class="g-cell {{getAlign(column)}}">
-                                <!--<span title="{{bindCellTitle(groupedItem, column)}}"-->
-                                <!--data-ng-bind-html="bindCell(groupedItem, column)"></span>-->
+                            <div class="g-cell-wrap" data-ng-repeat="column in columns">
+                                <div class="g-cell {{getAlign(column)}}">
+                                    <!--<span title="{{bindCellTitle(groupedItem, column)}}"-->
+                                    <!--data-ng-bind-html="bindCell(groupedItem, column)"></span>-->
                                 <span title="{{bindCellTitle(groupedItem, column)}}"
                                       data-ng-bind="bindCell(groupedItem, column)"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div data-ng-if="options.isReport" class="report-holder">
+                <div data-ng-if="options.grouping_type == 'area'" class="report-holder">
 
                     <!-- preInit.initGroup start -->
 
-                    <group-bind-report-row data-ng-repeat="item in reportItemsProjection() track by $index"
-                                           item="item"></group-bind-report-row>
+                    <group-bind-area-row data-ng-repeat="item in reportItemsProjection() track by $index"
+                                         item="item"></group-bind-area-row>
 
 
                     <!-- !preInit.initGroup end-->
@@ -83,7 +85,6 @@
         <div class="table-end-row"></div>
         {{paginationItemsTotal}}
         <div
-                data-ng-if="!options.isReport"
                 paging
                 class="g-table-body-pagination"
                 page="options.paginationPageCurrent"

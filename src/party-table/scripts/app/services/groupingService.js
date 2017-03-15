@@ -285,7 +285,7 @@
 
         function recursiveWalker(items, groups, entityTypes, level, options) {
 
-            //console.log('options', options);
+            console.log('options', options);
             //console.log('level', level);
 
             var setGroupOptions = {
@@ -569,7 +569,7 @@
                 });
             }
 
-            //console.log('results', results);
+            //console.log('results1', results);
 
             return results;
 

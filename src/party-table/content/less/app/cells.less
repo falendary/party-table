@@ -1,0 +1,219 @@
+.pt-app {
+  .g-table-body-component {
+    .g-row {
+      overflow: hidden;
+      background: #f1f1f1;
+      &.selected-row {
+        .g-row-selection {
+          //background-color: rgba(205, 136, 99, .4);
+          background: #ffeee8;
+          fill: #4C334D;
+
+        }
+        .g-cell-wrap {
+          //background-color: rgba(205, 136, 99, .2);
+          background: #ffeee8;
+        }
+        //background-color: rgba(205, 136, 99, .2);
+        //outline: 1px solid rgb(205, 136, 99);
+      }
+      border-bottom: 1px solid #363636;
+      &:nth-last-of-type {
+        border-bottom: 1px solid #fff;
+      }
+      &:hover {
+        //background: #DCDCDC;
+        .g-row-right-misc {
+          padding-top: 4px;
+          visibility: visible;
+        }
+      }
+      .g-row-right-misc {
+        text-align: right;
+        padding-right: 10px;
+        visibility: hidden;
+        .md-icon-button {
+          line-height: 1;
+          svg {
+            height: 16px;
+            width: 16px;
+          }
+        }
+        .md-icon-button {
+          min-width: 0;
+          margin: 0;
+          //position: relative;
+          width: auto;
+          //top: 3px;
+          min-height: 0;
+          height: auto;
+          padding: 0;
+        }
+        .g-delete-btn {
+          display: inline-block;
+          fill: #767676;
+        }
+        .g-entity-menu {
+          display: inline-block;
+          fill: #767676;
+        }
+      }
+    }
+
+    .g-cell-wrap {
+      float: left;
+      overflow: hidden;
+      background: #fff;
+      .g-cell {
+        float: none;
+      }
+    }
+
+
+
+    .g-cell {
+      padding: 4px 15px 8px;
+      height: 12px;
+      font-size: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      &:last-child {
+        //border-right: 1px solid #DADADA;
+        //margin-right: 2px;
+      }
+    }
+
+    .report-holder {
+      .g-row.report-normal-row, .g-row.report-subtotal-row, .g-row.report-header-row {
+        border-bottom: 1px solid transparent;
+      }
+      .g-row {
+        border: none !important;
+        box-shadow: -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset, -1px 1px 0 0 #DADADA, -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset;
+      }
+      .g-row .g-cell {
+        height: 24px;
+        box-sizing: border-box;
+        border: none !important;
+        box-shadow: -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset, -1px 1px 0 0 #DADADA, -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset;
+      }
+      .g-row .g-row-selection {
+        box-shadow: 1px 1px 0 0 #DADADA inset, 1px 1px 0 0 #DADADA inset, -1px 1px 0 0 #DADADA inset, 1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset;
+        border: none !important;
+      }
+
+      .g-cell.g-cell-group {
+        box-shadow: -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset, -1px 1px 0 0 #DADADA, -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset;
+      }
+
+      .g-row.report-preinit-row {
+        border-bottom: 0;
+        position: relative;
+        z-index: 1;
+
+        box-shadow: -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset, -1px 1px 0 0 #DADADA, -1px 0 0 0 #DADADA inset, 0 1px 0 0 #DADADA inset;
+
+        .g-group {
+          height: 24px;
+          line-height: 24px;
+        }
+        .g-row-selection {
+          margin-right: 6px;
+        }
+      }
+      .g-row.report-init-row {
+        position: relative;
+        z-index: 1;
+        .g-group {
+          height: 24px;
+          line-height: 24px;
+        }
+        .g-row-selection {
+          margin-right: 6px;
+        }
+      }
+
+      .g-row.report-init-row {
+        box-shadow: 1px 0 0 0 #DADADA,
+        0 1px 0 0 #DADADA,
+        1px 1px 0 0 #DADADA,
+        1px 0 0 0 #DADADA inset,
+        0 1px 0 0 #DADADA inset;
+      }
+
+      .g-row.report-subtotal-row {
+        .g-cell {
+          border-right: 0;
+          //border-bottom: 1px solid #DADADA;
+        }
+
+        //.g-cell-wrap:last-child .g-cell {
+        //  box-shadow: 1px 0 0 0 #DADADA,
+        //  0 1px 0 0 #DADADA,
+        //  1px 1px 0 0 #DADADA,
+        //  1px 0 0 0 #DADADA inset,
+        //  0 1px 0 0 #DADADA inset;
+        //}
+        //.g-cell-wrap:nth-child(2) .g-cell { //wut?
+        //  box-shadow: 1px 0 0 0 #DADADA, 0 1px 0 0 #DADADA, 1px 1px 0 0 #DADADA, 1px 0 0 0 #DADADA inset;
+        //}
+      }
+
+      //.g-row.report-header-row {
+      //  .g-cell-wrap:nth-child(2) .g-cell { //wut?
+      //    box-shadow: 1px 0 0 0 #DADADA, 0 1px 0 0 #DADADA, 1px 1px 0 0 #DADADA, 1px 0 0 0 #DADADA inset;
+      //  }
+      //}
+      //.g-row.report-normal-row {
+      //  .g-cell-wrap:nth-child(2) .g-cell { //wut?
+      //    box-shadow: 1px 0 0 0 #DADADA, 0 1px 0 0 #DADADA, 1px 1px 0 0 #DADADA, 1px 0 0 0 #DADADA inset;
+      //  }
+      //}
+
+      .g-row {
+        //.g-cell.r-c-border-right {
+        //  box-shadow: inset -1px 0 0 #DADADA;
+        //}
+        //.g-cell.r-c-border-top {
+        //  box-shadow: 1px 0 0 0 #DADADA,
+        //  0 1px 0 0 #DADADA,
+        //  1px 1px 0 0 #DADADA,
+        //  1px 0 0 0 #DADADA inset,
+        //  0 1px 0 0 #DADADA inset;
+        //}
+        //.g-cell.r-c-border-bottom {
+        //  box-shadow: inset 0 -.5px 0 0 #DADADA
+        //}
+        //
+        //.g-cell.r-c-border-left-border-right {
+        //  box-shadow: inset -.5px 0 0 #DADADA, inset .5px 0 0 #DADADA,
+        //}
+        //.g-cell.r-c-border-left-border-bottom {
+        //  box-shadow: inset .5px 0 0 #DADADA, inset 0 -.5px 0 0 #DADADA;
+        //}
+        //.g-cell.r-c-border-right-border-bottom {
+        //  box-shadow: inset -.5px 0 0 #DADADA, inset 0 -.5px 0 0 #DADADA;
+        //}
+        //
+        //.g-cell.r-c-border-right-border-bottom-border-top {
+        //  box-shadow: inset -.5px 0 0 #DADADA, inset 0 -.5px 0 0 #DADADA, inset 0 .5px 0 0 #DADADA;
+        //}
+        //
+        //.r-c-border-top-border-bottom {
+        //  box-shadow: inset 0 .5px 0 0 #DADADA, inset 0 -.5px 0 0 #DADADA;
+        //}
+        //
+        //.g-cell.r-c-border-top-border-right {
+        //  box-shadow: inset 0 .5px 0 0 #DADADA, inset -.5px 0 0 #DADADA;
+        //}
+      }
+
+    }
+
+    .g-cell-group {
+      background: #DCDCDC;
+    }
+
+  }
+}

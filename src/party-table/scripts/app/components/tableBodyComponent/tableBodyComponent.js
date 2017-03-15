@@ -6,7 +6,7 @@
     'use strict';
 
     //var bindCellService = require('../../services/bindCellService');
-    //var groupTableReportService = require('../../services/groupTable/groupTableReportService');
+    var groupTableReportService = require('../../services/groupTableReportService');
     //var groupTableBodyHelper = require('../../helpers/groupTableBodyHelper');
 
     var GroupTableService = require('../../services/groupTableService');
@@ -28,7 +28,7 @@
             $scope.columns = $scope.options.columns;
             $scope.entityType = $scope.options.entityType;
             $scope.reportIsReady = $scope.options.reportIsReady;
-            $scope.isReport = $scope.options.isReport;
+            $scope.grouping_type = $scope.options.grouping_type;
 
             $scope.readyStatus = {
                 cellsFirstReady: false,
@@ -77,7 +77,7 @@
 
             $scope.toggleGroupFold = function (item, $index) {
 
-                if ($scope.isReport) {
+                if ($scope.grouping_type == 'area') {
 
                     item.cellsCaptions[$index].isFolded = !item.cellsCaptions[$index].isFolded;
 
@@ -169,7 +169,7 @@
                     var i;
                     var promises = [];
 
-                    if ($scope.isReport == true) {
+                    if ($scope.grouping_type == 'area') {
 
                         //console.log('entityFieldsArray', entityFieldsArray);
                         //console.log('$scope.columns[i]', $scope.columns);
@@ -275,7 +275,7 @@
                         if (data.length) {
                             var i;
 
-                            console.log('data', data);
+                            //console.log('data', data);
 
                             for (i = 0; i < data.length; i = i + 1) {
 
@@ -299,7 +299,7 @@
             }
 
             $scope.reportItemsProjection = function () {
-                //console.log('$scope.reportItems', $scope.reportItems);
+
                 return $scope.reportItems;
             };
 
@@ -961,28 +961,37 @@
                 $scope.externalCallback({options: {paginationPageCurrent: page}});
             };
 
-            //$scope.$watchCollection('options.columns', function () {
-            //    syncGroupsAndColumns();
-            //
-            //    if ($scope.isReport == true) {
-            //        $scope.reportItems = groupTableReportService.transformItems($scope.items);
-            //    }
-            //});
-            //
-            //$scope.$watchCollection('grouping', function () {
-            //    syncGroupsAndColumns();
-            //
-            //    if ($scope.isReport == true) {
-            //        $scope.reportItems = groupTableReportService.transformItems($scope.items);
-            //    }
-            //});
-            //
-            //if ($scope.isReport == true) {
-            //
-            //    $scope.$watch('items', function () {
-            //        $scope.reportItems = groupTableReportService.transformItems($scope.items);
-            //    });
-            //}
+            this.$onInit = function () {
+
+                setTimeout(function () {
+
+
+                    $scope.$watchCollection('options.columns', function () {
+                        syncGroupsAndColumns();
+
+                        if ($scope.grouping_type == 'area') {
+                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
+                        }
+                    });
+
+                    $scope.$watchCollection('grouping', function () {
+                        syncGroupsAndColumns();
+
+                        if ($scope.grouping_type == 'area') {
+                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
+                        }
+                    });
+
+                    if ($scope.grouping_type == 'area') {
+
+                        $scope.$watch('items', function () {
+                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
+                        });
+                    }
+
+                }, 0)
+
+            }
 
         }
     }

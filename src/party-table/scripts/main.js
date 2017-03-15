@@ -10,6 +10,7 @@ app.component('sidebarArea', require('./app/components/sidebarAreaComponent/side
 app.component('groupingArea', require('./app/components/groupingAreaComponent/groupingAreaComponent.js'));
 app.component('columnArea', require('./app/components/columnAreaComponent/columnAreaComponent.js'));
 
+app.directive('groupBindAreaRow', [require('./app/directives/groupBindAreaRowDirective/groupBindAreaRowDirective.js')]);
 app.directive('columnResize', [require('./app/directives/columnResizeDirective/columnResizeDirective.js')]);
 app.directive('columnInitWidth', [require('./app/directives/columnInitWidthDirective/columnInitWidthDirective.js')]);
 app.directive('dropdown', [require('./app/directives/dropdownDirective/dropdownDirective.js')]);
