@@ -1,61 +1,64 @@
 <!--<div class="g-table-body-component" data-group-vertical-scroll>-->
 <div class="g-table-body-component custom-scrollbar" data-custom-scroll data-scroll-sticky="true">
-    <div data-ng-if="!checkReady()">
-        <div>
-            <md-progress-linear md-mode="indeterminate"></md-progress-linear>
-        </div>
-    </div>
+    <!--<div data-ng-if="!vm.checkReady()">-->
+        <!--<div>-->
+            <!--<md-progress-linear md-mode="indeterminate"></md-progress-linear>-->
+        <!--</div>-->
+    <!--</div>-->
     <!--<div data-ng-show="checkReady()" ng-cloak style="padding-bottom: 75px">-->
-    <div data-ng-show="checkReady()" ng-cloak>
+    <!--<div data-ng-show="vm.checkReady()" ng-cloak>-->
+    <div ng-cloak>
         <div>
-            <div data-ng-if="options.grouping.length" contextmenu-container="gtbody.contextmenu">
-                <div data-ng-if="options.grouping_type == 'breadcrumbs'">
-                    <div data-ng-repeat="item in itemsProjection()">
+            <!--<div data-ng-if="vm.options.grouping.length" contextmenu-container="gtbody.contextmenu">-->
+            <div data-ng-if="vm.options.grouping.length">
+                <div data-ng-if="vm.options.grouping_type == 'breadcrumbs'">
+                    <div data-ng-repeat="item in vm.itemsProjection()">
                         <div class="g-group-holder {{ checkRowSelection(item) ? 'selected-row' : '' }}">
-                            <div class="g-row-selection" data-ng-click="toggleSelectRow($event, item)">
+                            <div class="g-row-selection" data-ng-click="vm.toggleSelectRow($event, item)">
                                 <ng-md-icon icon="done" data-ng-show="item.selectedRow"></ng-md-icon>
                             </div>
                             <div class="pt-card group-row-fold-holder">
                                 <div>
                                     <a class="pt-button" aria-label="hide/show grouping" data-ng-show="item.isFolded"
-                                       data-ng-click="toggleGroupFold(item)">
+                                       data-ng-click="vm.toggleGroupFold(item)">
                                         <i class="fa fa-plus"></i>
                                     </a>
                                     <a class="pt-button" aria-label="hide/show grouping" data-ng-show="!item.isFolded"
-                                       data-ng-click="toggleGroupFold(item)">
+                                       data-ng-click="vm.toggleGroupFold(item)">
                                         <i class="fa fa-minus"></i>
                                     </a>
                                 </div>
                             </div>
                             <div data-ng-repeat="group in item.groups track by $index" class="g-group">
-                                <span data-ng-bind="bindGroupValue(group)"></span>
+                                <span data-ng-bind="vm.bindGroupValue(group)"></span>
                             </div>
                         </div>
-                        <div data-ng-repeat="groupedItem in item.items" contextmenu-item="groupedItem"
+                        <!--<div data-ng-repeat="groupedItem in item.items" contextmenu-item="groupedItem"-->
+                        <div data-ng-repeat="groupedItem in item.items"
                              data-ng-show="!item.isFolded" data-ng-right-click="$mdOpenMenu($event)"
                              class="{{ checkRowSelection(groupedItem) ? 'selected-row' : ''}} g-row"
-                             data-ng-click="rowCallback(groupedItem, $event)">
+                             data-ng-click="vm.rowCallback(groupedItem, $event)">
 
-                            <div class="g-row-selection" data-ng-click="toggleSelectRow($event, groupedItem)">
+                            <div class="g-row-selection" data-ng-click="vm.toggleSelectRow($event, groupedItem)">
                                 <ng-md-icon icon="done" data-ng-show="groupedItem.selectedRow"></ng-md-icon>
                             </div>
 
-                            <div class="g-cell-wrap" data-ng-repeat="column in columns">
+                            <div class="g-cell-wrap" data-ng-repeat="column in vm.options.columns">
                                 <div class="g-cell {{getAlign(column)}}">
                                     <!--<span title="{{bindCellTitle(groupedItem, column)}}"-->
                                     <!--data-ng-bind-html="bindCell(groupedItem, column)"></span>-->
                                 <span title="{{bindCellTitle(groupedItem, column)}}"
-                                      data-ng-bind="bindCell(groupedItem, column)"></span>
+                                      data-ng-bind="vm.bindCell(groupedItem, column)"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div data-ng-if="options.grouping_type == 'area'" class="report-holder">
+                <div data-ng-if="vm.options.grouping_type == 'area'" class="report-holder">
 
                     <!-- preInit.initGroup start -->
 
-                    <group-bind-area-row data-ng-repeat="item in reportItemsProjection() track by $index"
+                    <group-bind-area-row data-ng-repeat="item in vm.reportItemsProjection() track by $index"
                                          item="item"></group-bind-area-row>
 
 
@@ -64,19 +67,20 @@
 
                 </div>
             </div>
-            <div data-ng-if="!options.grouping.length" contextmenu-container="gtbody.contextmenu">
-                <div data-ng-repeat="item in itemsProjection()"
+            <!--<div data-ng-if="vm.!options.grouping.length" contextmenu-container="gtbody.contextmenu">-->
+            <div data-ng-if="!vm.options.grouping.length">
+                <div data-ng-repeat="item in vm.itemsProjection()"
                      class="{{ checkRowSelection(item) ? 'selected-row' : ''}} g-row"
-                     contextmenu-item="item" data-ng-click="rowCallback(item, $event)">
-                    <div class="g-row-selection" data-ng-click="toggleSelectRow($event, item)">
+                     contextmenu-item="item" data-ng-click="vm.rowCallback(item, $event)">
+                    <div class="g-row-selection" data-ng-click="vm.toggleSelectRow($event, item)">
                         <ng-md-icon icon="done" data-ng-show="item.selectedRow"></ng-md-icon>
                     </div>
-                    <div class="g-cell-wrap" data-ng-repeat="column in columns">
+                    <div class="g-cell-wrap" data-ng-repeat="column in vm.optionscolumns">
                         <div class="g-cell {{getAlign(column)}}">
                             <!--<span title="{{bindCellTitle(item, column)}}"-->
                             <!--data-ng-bind-html="bindCell(item, column)"></span>-->
                             <span title="{{bindCellTitle(item, column)}}"
-                                  data-ng-bind="bindCell(item, column)"></span>
+                                  data-ng-bind="vm.bindCell(item, column)"></span>
                         </div>
                     </div>
                 </div>
@@ -94,20 +98,20 @@
         </div>
     </div>
 </div>
-<div contextmenu="gtbody.contextmenu" class="dropdown contextmenu ng-hide">
-    <md-menu-content width="4">
-        <md-menu-item>
-            <md-button ng-click="editEntity($event, gtbody.contextmenu.get().item)" class="g-settings-option-btn">
-                <ng-md-icon icon="mode_edit"></ng-md-icon>
-                <span>Edit</span>
-            </md-button>
-        </md-menu-item>
-        <md-menu-item>
-            <md-button ng-click="deleteEntity($event, gtbody.contextmenu.get().item)"
-                       class="g-settings-option-btn">
-                <ng-md-icon icon="delete"></ng-md-icon>
-                <span>Delete</span>
-            </md-button>
-        </md-menu-item>
-    </md-menu-content>
-</div>
+<!--<div contextmenu="gtbody.contextmenu" class="dropdown contextmenu ng-hide">-->
+<!--<md-menu-content width="4">-->
+<!--<md-menu-item>-->
+<!--<md-button ng-click="vm.editEntity($event, gtbody.contextmenu.get().item)" class="g-settings-option-btn">-->
+<!--<ng-md-icon icon="mode_edit"></ng-md-icon>-->
+<!--<span>Edit</span>-->
+<!--</md-button>-->
+<!--</md-menu-item>-->
+<!--<md-menu-item>-->
+<!--<md-button ng-click="vm.deleteEntity($event, gtbody.contextmenu.get().item)"-->
+<!--class="g-settings-option-btn">-->
+<!--<ng-md-icon icon="delete"></ng-md-icon>-->
+<!--<span>Delete</span>-->
+<!--</md-button>-->
+<!--</md-menu-item>-->
+<!--</md-menu-content>-->
+<!--</div>-->

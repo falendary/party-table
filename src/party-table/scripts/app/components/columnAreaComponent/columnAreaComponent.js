@@ -16,40 +16,52 @@
         controllerAs: 'vm',
         controller: function ($scope) {
 
-            $scope.options = $scope.$parent.options;
+            console.log('Init groping');
 
-            $scope.grouping = $scope.options.grouping;
-            $scope.filters = $scope.options.filters;
-            $scope.sorting = $scope.options.sorting;
-            $scope.columns = $scope.options.columns;
-            $scope.entityType = $scope.options.entityType;
-            $scope.externalCallback = $scope.options.externalCallback;
-            $scope.isReport = $scope.options.isReport;
+            var vm = this;
+
+            console.log('$scope', vm.options);
+            console.log('$scope', $scope);
+
+            //vm.options = vm.$parent.options;
+
+            this.$onInit = function () {
+
+                vm.grouping = vm.options.grouping;
+                vm.filters = vm.options.filters;
+                vm.columns = vm.options.columns;
+                vm.sorting = vm.options.sorting;
+                vm.folding = vm.options.folding;
+                vm.entityType = vm.options.entityType;
+                vm.externalCallback = vm.options.externalCallback;
+                vm.isReport = vm.options.isReport;
+
+            };
 
             var baseAttrs = [];
             var entityAttrs = [];
-            if (metaService.getEntitiesWithoutBaseAttrsList().indexOf($scope.entityType) === -1) {
+            if (metaService.getEntitiesWithoutBaseAttrsList().indexOf(vm.entityType) === -1) {
                 baseAttrs = metaService.getBaseAttrs();
             }
-            entityAttrs = metaService.getEntityAttrs($scope.entityType);
+            entityAttrs = metaService.getEntityAttrs(vm.entityType);
 
-            $scope.isAllSelected = false;
+            vm.isAllSelected = false;
 
-            $scope.selectAllRows = function () {
-                $scope.isAllSelected = !$scope.isAllSelected;
-                $scope.items.forEach(function (item) {
+            vm.selectAllRows = function () {
+                vm.isAllSelected = !vm.isAllSelected;
+                vm.items.forEach(function (item) {
                     if (item.hasOwnProperty('groups')) {
-                        item.selectedRow = $scope.isAllSelected;
+                        item.selectedRow = vm.isAllSelected;
                         item.items.forEach(function (row) {
-                            row.selectedRow = $scope.isAllSelected;
+                            row.selectedRow = vm.isAllSelected;
                         })
                     } else {
-                        item.selectedRow = $scope.isAllSelected;
+                        item.selectedRow = vm.isAllSelected;
                     }
                 })
             };
 
-            $scope.isColumnFloat = function (column) {
+            vm.isColumnFloat = function (column) {
 
                 if (column.value_type == 'float' || column.value_type == 20) {
                     return true
@@ -58,29 +70,29 @@
                 return false;
             };
 
-            $scope.sortHandler = function (column, sort) {
+            vm.sortHandler = function (column, sort) {
                 var i;
-                for (i = 0; i < $scope.columns.length; i = i + 1) {
-                    if (!$scope.columns[i].options) {
-                        $scope.columns[i].options = {};
+                for (i = 0; i < vm.columns.length; i = i + 1) {
+                    if (!vm.columns[i].options) {
+                        vm.columns[i].options = {};
                     }
-                    $scope.columns[i].options.sort = null;
+                    vm.columns[i].options.sort = null;
                 }
                 column.options.sort = sort;
 
                 if (column.hasOwnProperty('id')) {
-                    $scope.sorting.column.id = column.id;
-                    $scope.sorting.column.key = null;
-                    $scope.sorting.column.sort = sort;
+                    vm.sorting.column.id = column.id;
+                    vm.sorting.column.key = null;
+                    vm.sorting.column.sort = sort;
                 } else {
-                    $scope.sorting.column.id = null;
-                    $scope.sorting.column.key = column.key;
-                    $scope.sorting.column.sort = sort;
+                    vm.sorting.column.id = null;
+                    vm.sorting.column.key = column.key;
+                    vm.sorting.column.sort = sort;
                 }
-                $scope.externalCallback({silent: true, options: {columns: $scope.columns}});
+                vm.externalCallback({silent: true, options: {columns: vm.columns}});
             };
 
-            $scope.selectSubtotalType = function (column, type) {
+            vm.selectSubtotalType = function (column, type) {
 
                 if (!column.hasOwnProperty('report_settings')) {
                     column.report_settings = {};
@@ -92,13 +104,13 @@
                     column.report_settings.subtotal_formula_id = type;
                 }
 
-                //console.log('$scope.column11111s JSON', JSON.parse(JSON.stringify(column)));
-                //console.log('$scope.column11111s JSON', JSON.parse(JSON.stringify($scope.columns)));
+                //console.log('vm.column11111s JSON', JSON.parse(JSON.stringify(column)));
+                //console.log('vm.column11111s JSON', JSON.parse(JSON.stringify(vm.columns)));
 
-                $scope.externalCallback({silent: true, options: {columns: $scope.columns}});
+                vm.externalCallback({silent: true, options: {columns: vm.columns}});
             };
 
-            $scope.checkSubtotalFormula = function (column, type) {
+            vm.checkSubtotalFormula = function (column, type) {
 
                 if (column.hasOwnProperty('report_settings') && column.report_settings) {
                     if (column.report_settings.subtotal_formula_id == type) {
@@ -111,48 +123,22 @@
 
             };
 
-            $scope.$watchCollection('columns', function () {
+            vm.removeColumn = function (column) {
 
+                vm.columns = vm.columns.map(function (item) {
+                    if (item.key === column.key) {
+                        return undefined
+                    }
+                    return item;
+                }).filter(function (item) {
+                    return !!item;
+                });
 
-                setTimeout(function () {
+                vm.externalCallback({silent: true, options: {columns: vm.columns}});
 
-                    $scope.externalCallback({silent: true, options: {columns: $scope.columns}});
-                    $scope.$apply();
-
-                }, 0)
-            });
-
-            $scope.removeColumn = function (column) {
-                if (column.id) {
-                    $scope.columns = $scope.columns.map(function (item) {
-                        if (item.id === column.id || item.key === column.key) {
-                            item = undefined
-                        }
-                        return item
-                    }).filter(function (item) {
-                        return !!item;
-                    });
-                }
-                if (column.key) {
-                    $scope.columns = $scope.columns.map(function (item) {
-                        if (item.key === column.key) {
-                            return undefined
-                        }
-                        return item
-                    }).filter(function (item) {
-                        return !!item;
-                    });
-                }
-                //console.log('remove', $scope.columns);
-
-                //console.log('$scope.columns', $scope.columns)
-
-                setTimeout(function () {
-                    $scope.externalCallback({silent: true, options: {columns: $scope.columns}});
-                }, 0)
             };
 
-            $scope.reportHideSubtotal = function (column) {
+            vm.reportHideSubtotal = function (column) {
 
                 if (!column.hasOwnProperty('report_settings')) {
                     column.report_settings = {};

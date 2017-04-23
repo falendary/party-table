@@ -1,17 +1,20 @@
-<div class="g-wrapper" data-group-height-aligner data-options="options">
+
+
+<div class="g-wrapper" data-group-height-aligner data-options="vm.options">
     <div class="g-workarea-wrap">
         <div class="g-workarea main-area" data-group-clipboard-handler data-items="items" data-columns="columns">
             <div class="g-grouping-section">
-                <grouping-area options="options"></grouping-area>
+                <!--{{vm.options}}-->
+                <grouping-area options="vm.options"></grouping-area>
             </div>
             <div class="g-table-section">
                 <div data-custom-scroll class="custom-scrollbar" data-scroll-y="false">
-                    <div class="g-table-wrap" column-resize>
-                        <column-area options="options"
+                    <div class="g-table-wrap" column-resize options="vm.options" items="items">
+                        <column-area options="vm.options"
                                      items="items"
                         ></column-area>
                         <table-body class="table-body"
-                                    options="options"
+                                    options="vm.options"
                                     items="items"
                         ></table-body>
                     </div>
@@ -22,7 +25,7 @@
     <div class="g-filter-sidebar main-sidebar">
         <div data-custom-scroll class="custom-scrollbar">
             <div class="g-filter" id="filtersbag">
-                <sidebar-area options="options" report-options="reportOptions"></sidebar-area>
+                <sidebar-area options="vm.options" report-options="reportOptions"></sidebar-area>
             </div>
         </div>
     </div>
@@ -35,7 +38,7 @@
                 </div>
             </div>
             <div data-ng-show="options.editorEntityId" class="min-height">
-                <group-editor-binder options="options"></group-editor-binder>
+                <group-editor-binder options="vm.options"></group-editor-binder>
             </div>
         </div>
         <div class="g-additions-workarea" data-ng-if="options.additionsStatus.permissionEditor">

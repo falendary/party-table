@@ -62,6 +62,7 @@
             .pipe(minifyCSS())
             .pipe(rename('party-table.min.css'))
             .pipe(gulp.dest('dist/' + appName + '/'))
+            .pipe(gulp.dest('examples/content/' + appName + '/'))
 
     });
 
@@ -86,6 +87,7 @@
                 this.emit('end');
             })
             .pipe(gulp.dest('dist/' + appName + '/'))
+            .pipe(gulp.dest('examples/scripts/' + appName + '/'))
             .pipe(livereload());
     });
 

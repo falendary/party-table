@@ -8,12 +8,24 @@
     module.exports = {
         templateUrl: 'app/components/tableShellComponent/table-shell-component.html',
         controllerAs: 'vm',
+        bindings: {
+            options: '=',
+            items: '='
+        },
         controller: function ($scope) {
+
+            console.log('Init table shell');
 
             var vm = this;
 
-            $scope.options = $scope.$parent.vm.options;
-            $scope.items = $scope.$parent.vm.items;
+
+            this.$onInit = function () {
+
+                console.log('$scope.options', $scope.options);
+
+                //$scope.options = $scope.$parent.vm.options;
+                //$scope.items = $scope.$parent.vm.items;
+            };
 
             $scope.findSelectedFeature = function () {
                 var selected = {isOpened: false, templateUrl: ''};
@@ -31,25 +43,6 @@
             $scope.triggerResize = function () {
 
             };
-
-            if ($scope.options.isRootEntityViewer == true) {
-
-                $scope.$watch('options.editorEntityId', function (event, data) {
-
-                    $scope.$broadcast('rootEditorEntityIdDown', {
-                        editorEntityId: $scope.options.editorEntityId,
-                        entityType: $scope.options.entityType
-                    });
-                });
-            }
-
-            $scope.checkAdditions = function () {
-                if ($scope.options.additionsState == true && $scope.options.isRootEntityViewer == true && $scope.options.components.splitPanel == true) {
-                    return true;
-                }
-                return false;
-            }
-
         }
     }
 

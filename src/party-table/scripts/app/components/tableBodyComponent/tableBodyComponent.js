@@ -5,10 +5,7 @@
 
     'use strict';
 
-    //var bindCellService = require('../../services/bindCellService');
     var groupTableReportService = require('../../services/groupTableReportService');
-    //var groupTableBodyHelper = require('../../helpers/groupTableBodyHelper');
-
     var GroupTableService = require('../../services/groupTableService');
 
     module.exports = {
@@ -20,24 +17,13 @@
         controllerAs: 'vm',
         controller: function ($scope) {
 
-            $scope.options = $scope.$parent.options;
-            $scope.items = $scope.$parent.items;
+            console.log('Init table body');
 
-            $scope.externalCallback = $scope.options.externalCallback;
-            $scope.grouping = $scope.options.grouping;
-            $scope.columns = $scope.options.columns;
-            $scope.entityType = $scope.options.entityType;
-            $scope.reportIsReady = $scope.options.reportIsReady;
-            $scope.grouping_type = $scope.options.grouping_type;
+            var vm = this;
 
-            $scope.readyStatus = {
-                cellsFirstReady: false,
-                cellsSecondReady: false,
-                attributeTypesReady: false,
-                classifiersReady: false
-            }; // if groups not exist
+            console.log('vm.options', vm.options);
 
-            var entityType = $scope.entityType;
+            var entityType = vm.entityType;
             var baseAttrs = [];
             var entityAttrs = [];
 
@@ -48,24 +34,51 @@
 
             var groupTableService = GroupTableService.getInstance();
 
-            $scope.itemsProjection = function () {
+            this.$onInit = function () {
+
+                vm.externalCallback = vm.options.externalCallback;
+                vm.grouping = vm.options.grouping;
+                vm.columns = vm.options.columns;
+                vm.entityType = vm.options.entityType;
+                vm.reportIsReady = vm.options.reportIsReady;
+                vm.grouping_type = vm.options.grouping_type;
+
+                vm.readyStatus = {
+                    cellsFirstReady: false,
+                    cellsSecondReady: false,
+                    attributeTypesReady: false,
+                    classifiersReady: false
+                }; // if groups not exist
+
+
+               groupTableService = GroupTableService.getInstance();
+
+                setTimeout(function () {
+
+                    $scope.$watch('options.lastUpdate', function () {
+
+                        if (vm.grouping_type == 'area') {
+                            vm.reportItems = groupTableReportService.transformItems(groupTableService.projection())
+                        }
+                    });
+
+
+                }, 0)
+
+            };
+
+            //vm.options = vm.$parent.options;
+            //vm.items = vm.$parent.items;
+
+
+            vm.itemsProjection = function () {
                 return groupTableService.projection();
             };
 
-
-            $scope.reportItemsProjection = function () {
-                return $scope.reportItems;
-            };
-
-
-            //baseAttrs = metaService.getBaseAttrs();
             //
-            //
-            //entityAttrs = metaService.getEntityAttrs(entityType);
-
-            //setInterval(function () {
-            //    $('.g-table-section .custom-scrollbar')[0].dispatchEvent(new Event('scroll'));
-            //}, 1000);
+            //vm.reportItemsProjection = function () {
+            //    return vm.reportItems;
+            //};
 
             function getCellsCaptionsPatterns(item, itemIndex) {
 
@@ -80,9 +93,9 @@
                 return result.join('_-_');
             }
 
-            $scope.toggleGroupFold = function (item, $index) {
+            vm.toggleGroupFold = function (item, $index) {
 
-                if ($scope.grouping_type == 'area') {
+                if (vm.grouping_type == 'area') {
 
                     item.cellsCaptions[$index].isFolded = !item.cellsCaptions[$index].isFolded;
 
@@ -92,7 +105,7 @@
 
                     var localItems = []; // to find first element, and revert isFolded;
 
-                    $scope.reportItems.forEach(function (reportItem) {
+                    vm.reportItems.forEach(function (reportItem) {
 
                         var reportCellCaptionsPatterns = getCellsCaptionsPatterns(reportItem, $index);
 
@@ -131,7 +144,7 @@
                 }
             };
 
-            $scope.itemIsFolded = function (item) {
+            vm.itemIsFolded = function (item) {
 
                 var isShowed = true;
 
@@ -153,11 +166,11 @@
 
             };
 
-            $scope.openEntityMenu = function ($mdOpenMenu, ev) {
+            vm.openEntityMenu = function ($mdOpenMenu, ev) {
                 $mdOpenMenu(ev);
             };
 
-            $scope.checkReportColumnCaption = function (cellsCaptions, column, $columnIndex) {
+            vm.checkReportColumnCaption = function (cellsCaptions, column, $columnIndex) {
 
                 if ($columnIndex > cellsCaptions.length - 1) { // 1 - index
                     return false;
@@ -169,69 +182,6 @@
 
             };
 
-            var getFieldDisplayNamesArray = function () {
-                return new Promise(function (resolve, reject) {
-                    var i;
-                    var promises = [];
-
-                    if ($scope.grouping_type == 'area') {
-
-                        //console.log('entityFieldsArray', entityFieldsArray);
-                        //console.log('$scope.columns[i]', $scope.columns);
-
-                    } else {
-
-                        for (i = 0; i < $scope.columns.length; i = i + 1) {
-                            var attributeExist = false;
-                            //console.log('12312312312312312', $scope.columns[i]);
-                            if ($scope.columns[i]['value_type'] == 'field') {
-                                //promises.push(bindCellService.findEntities($scope.columns[i].key, {entityType: entityType}));
-                            }
-                            if ($scope.columns[i]['value_type'] == 30) {
-                                //console.log('$scope.columns[i]', $scope.columns[i]);
-
-                                if (!promisesAttributeTypesAlreadyAdded[entityType]) {
-                                    promisesAttributeTypesAlreadyAdded[entityType] = [];
-                                }
-
-                                promisesAttributeTypesAlreadyAdded[entityType].forEach(function (attribute) {
-                                    if (attribute == $scope.columns[i].id) {
-                                        attributeExist = true;
-                                    }
-                                });
-
-
-                            }
-                        }
-                    }
-
-                    findEntityFields();
-
-                    Promise.all(promises).then(function (results) {
-                        //console.log('results11111111111111111', results);
-                        results.forEach(function (item) {
-                            if (item.key) {
-
-                                entityFieldsArray[item.key] = item.data;
-                            } else {
-                                entityFieldsArray['classifier_' + item.id] = item;
-                            }
-                        });
-
-                        $scope.readyStatus.attributeTypesReady = true;
-
-                    }).then(function () {
-                        $scope.$apply();
-                    })
-
-                });
-
-            };
-
-            if ($scope.grouping && $scope.grouping.length) {
-                syncGroupsAndColumns();
-            }
-
             function findGroups() {
 
                 return new Promise(function (resolve, reject) {
@@ -241,32 +191,32 @@
                     var promisesEntityFields = [];
 
 
-                    var items = $scope.items;
+                    var items = vm.items;
                     var classifierExist = false;
                     var entityExist = false;
 
                     //console.log('ITEMS', items);
 
-                    for (i = 0; i < $scope.items.length; i = i + 1) {
-                        //console.log('$scope.items[i].groups', $scope.items[i].groups);
-                        if ($scope.items[i].hasOwnProperty('groups')) {
-                            for (g = 0; g < $scope.items[i].groups.length; g = g + 1) {
+                    for (i = 0; i < vm.items.length; i = i + 1) {
+                        //console.log('vm.items[i].groups', vm.items[i].groups);
+                        if (vm.items[i].hasOwnProperty('groups')) {
+                            for (g = 0; g < vm.items[i].groups.length; g = g + 1) {
 
                                 entityExist = false;
 
-                                if ($scope.items[i].groups[g]['value_type'] === 'field') {
+                                if (vm.items[i].groups[g]['value_type'] === 'field') {
 
-                                    if ($scope.items[i].groups[g].value !== null) {
+                                    if (vm.items[i].groups[g].value !== null) {
 
                                         promisesEntityFieldsAlreadyAdded.forEach(function (entity) {
-                                            if (entity == $scope.items[i].groups[g].key + '_' + $scope.items[i].groups[g].value) {
+                                            if (entity == vm.items[i].groups[g].key + '_' + vm.items[i].groups[g].value) {
                                                 entityExist = true;
                                             }
                                         });
 
                                         if (!entityExist) {
-                                            promisesEntityFieldsAlreadyAdded.push($scope.items[i].groups[g].key + '_' + $scope.items[i].groups[g].value);
-                                            //promisesEntityFields.push(bindCellService.getByKey($scope.items[i].groups[g].key, $scope.items[i].groups[g].value, {entityType: $scope.entityType}))
+                                            promisesEntityFieldsAlreadyAdded.push(vm.items[i].groups[g].key + '_' + vm.items[i].groups[g].value);
+                                            //promisesEntityFields.push(bindCellService.getByKey(vm.items[i].groups[g].key, vm.items[i].groups[g].value, {entityType: vm.entityType}))
                                         }
                                     }
                                 }
@@ -291,7 +241,7 @@
                             }
                         }
 
-                        $scope.readyStatus.cellsFirstReady = true;
+                        vm.readyStatus.cellsFirstReady = true;
                         //console.log('cells first ready');
                         resolve({status: "groups ready"});
 
@@ -303,8 +253,7 @@
                 })
             }
 
-
-            $scope.isSubtotalHided = function (column) {
+            vm.isSubtotalHided = function (column) {
                 if (column.hasOwnProperty('report_settings') && column.report_settings) {
 
                     //console.log('colum222222222222222n', column);
@@ -321,200 +270,7 @@
                 return true;
             };
 
-            $scope.resolveReportCellItemBackground = function (rowType, item, column, $index) {
-                var result = '';
-
-                //console.log('item', item);
-
-                if (item.hasOwnProperty('value_options')) {
-
-                    if (item.value_options.type == 'area') {
-                        result = 'cell-area-bg-' + item.value_options.level;
-                    }
-
-                    if (rowType == 'subtotal-line') {
-
-                        if (item.value_options.type == 'line') {
-                            result = 'cell-line-bg-' + item.value_options.level;
-                        }
-                    }
-
-                }
-
-                return result;
-            };
-
-            $scope.resolveReportCellBackground = function (rowType, item, column, $index) {
-
-                if ($index == 1) {
-                    //console.log(rowType, item, column, $index);
-                }
-
-                var result = '';
-
-
-                if (item.hasOwnProperty('cellsCaptions')) {
-
-                    var cellCaption = item.cellsCaptions[$index];
-
-                    if (cellCaption && cellCaption.hasOwnProperty('level') && cellCaption.hasOwnProperty('type')) {
-
-                        if (cellCaption.type !== 'empty') {
-                            if (cellCaption.type == 'area') {
-                                result = 'cell-area-bg-' + cellCaption.level;
-                            }
-
-                            if (rowType == 'subtotal-line') {
-
-                                //console.log('item', item);
-
-                                if (cellCaption.type == 'line') {
-                                    result = 'cell-line-bg-' + cellCaption.level;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return result;
-
-            };
-
-            $scope.resolveReportCellBorder = function (rowType, item, column, $index) {
-
-                var result = '';
-
-                //console.log('item', item);
-
-                if (rowType == 'subtotal') {
-
-                    if ($index < item.cellsCaptions.length) {
-                        if (item.cellsCaptions[$index] == 'Subtotal') {
-                            result = 'r-c-border-left-border-bottom';
-                        }
-
-                        if (item.cellsCaptions[$index + 1] == 'Subtotal') {
-                            result = 'r-c-border-left-border-right'
-                        }
-
-                        if (item.cellsCaptions[$index - 1] == 'Subtotal') {
-                            result = 'r-c-border-right-border-bottom-border-top';
-                        }
-
-                        if ($index == 0) {
-                            result = 'r-c-border-left-border-right'
-                        }
-
-                    } else {
-                        result = 'r-c-border-right-border-bottom-border-top';
-                    }
-
-                }
-
-                if (rowType == 'normal') {
-
-                    result = 'r-c-border-right-border-bottom-border-top';
-
-                    if ($index < item.cellsCaptions.length) {
-                        result = 'r-c-border-left-border-right'
-                    }
-
-                    if ($index == 0) {
-                        result = 'r-c-border-left-border-right'
-                    }
-
-
-                }
-
-                if (rowType == 'header') {
-
-                    result = 'r-c-border-right-border-bottom-border-top';
-
-                    if ($index < item.cellsCaptions.length) {
-                        result = 'r-c-border-left-border-right'
-                    }
-                    if ($index == 0) {
-                        result = 'r-c-border-left-border-right'
-                    }
-
-                }
-
-                return result;
-
-            };
-
-            function syncGroupsAndColumns() {
-
-                //console.log("$scope.grouping!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", $scope.grouping);
-
-                var promises = [];
-
-                promises.push(getFieldDisplayNamesArray());
-                promises.push(findGroups());
-
-                //console.log('??????????????????', promises);
-
-                Promise.all(promises).then(function () {
-                    $scope.$apply();
-                })
-            }
-
-            function findEntityFields() {
-
-                return new Promise(function (resolve, reject) {
-                    var i, g, e;
-                    var promises = [];
-
-                    for (i = 0; i < $scope.items.length; i = i + 1) {
-
-                        if ($scope.items[i].hasOwnProperty('groups')) {
-                            for (g = 0; g < $scope.items[i].groups.length; g = g + 1) {
-
-                                if ($scope.items[i].groups[g]['value_type'] === 'field' && $scope.items[i].groups[g].value !== null) {
-                                    var entityExist = false;
-
-                                    promisesEntityFieldsAlreadyAdded.forEach(function (entity) {
-                                        if (entity == $scope.items[i].groups[g].key + '_' + $scope.items[i].groups[g].value) {
-                                            entityExist = true;
-                                        }
-                                    });
-
-                                    if (!entityExist) {
-                                        promisesEntityFieldsAlreadyAdded.push($scope.items[i].groups[g].key + '_' + $scope.items[i].groups[g].value);
-                                        //promises.push(bindCellService.getByKey($scope.items[i].groups[g].key, $scope.items[i].groups[g].value))
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-
-                    Promise.all(promises).then(function (results) {
-                        //console.log('RESULTS', results);
-                        results.forEach(function (item) {
-                            //console.log('-------------------------------', item);
-                            if (item.key) {
-                                if (entityFieldsArray[item.key] == undefined) {
-                                    entityFieldsArray[item.key] = [];
-                                }
-                                if (item.data !== undefined) {
-                                    entityFieldsArray[item.key].push(item.data);
-                                }
-                            }
-                        });
-
-                        $scope.readyStatus.cellsSecondReady = true;
-
-                        resolve({status: "entity field ready"});
-
-                    }).then(function () {
-                        $scope.$apply();
-                    })
-                })
-
-            }
-
-            $scope.checkRowSelection = function (item) {
+            vm.checkRowSelection = function (item) {
                 //console.log('checkRowSelection', item);
 
                 if (item) {
@@ -525,18 +281,18 @@
                 return false;
             };
 
-            $scope.toggleSelectRow = function ($event, item) {
+            vm.toggleSelectRow = function ($event, item) {
 
                 if (item.simpleSelect == true) {
                     item.simpleSelect = false;
                 }
                 item.selectedRow = !item.selectedRow;
-                if ($scope.isAllSelected === true && item.selectedRow === false) {
-                    $scope.isAllSelected = false;
+                if (vm.isAllSelected === true && item.selectedRow === false) {
+                    vm.isAllSelected = false;
                 }
 
                 var allSelected = true;
-                $scope.items.forEach(function (item) {
+                vm.items.forEach(function (item) {
                     if (item.hasOwnProperty('groups')) {
                         if (!!item.selectedRow === false) {
                             allSelected = false;
@@ -554,32 +310,32 @@
                 });
 
                 if (allSelected) {
-                    $scope.isAllSelected = true;
+                    vm.isAllSelected = true;
                 }
                 $event.stopPropagation();
             };
 
-            $scope.checkReady = function () {
+            //vm.checkReady = function () {
+            //
+            //    //console.log('vm.options.reportIsReady', vm.options.reportIsReady);
+            //
+            //    return true;
+            //
+            //    if (vm.readyStatus.cellsFirstReady == true &&
+            //        vm.readyStatus.cellsSecondReady == true &&
+            //        vm.readyStatus.classifiersReady == true &&
+            //            //vm.reportIsReady == true &&
+            //        vm.options.reportIsReady == true &&
+            //        vm.readyStatus.attributeTypesReady == true) {
+            //
+            //        vm.$parent.triggerResize();
+            //
+            //        return true;
+            //    }
+            //    return false;
+            //};
 
-                //console.log('$scope.options.reportIsReady', $scope.options.reportIsReady);
-
-                return true;
-
-                if ($scope.readyStatus.cellsFirstReady == true &&
-                    $scope.readyStatus.cellsSecondReady == true &&
-                    $scope.readyStatus.classifiersReady == true &&
-                        //$scope.reportIsReady == true &&
-                    $scope.options.reportIsReady == true &&
-                    $scope.readyStatus.attributeTypesReady == true) {
-
-                    $scope.$parent.triggerResize();
-
-                    return true;
-                }
-                return false;
-            };
-
-            $scope.bindGroupValue = function (group) {
+            vm.bindGroupValue = function (group) {
 
                 //console.log('group', group);
 
@@ -601,7 +357,7 @@
                 return result;
             };
 
-            $scope.bindCellSubTotal = function (values, column) {
+            vm.bindCellSubTotal = function (values, column) {
 
                 //console.log(column);
 
@@ -622,7 +378,7 @@
 
             };
 
-            $scope.bindCell = function (groupedItem, column, options) {
+            vm.bindCell = function (groupedItem, column, options) {
 
                 if (column.hasOwnProperty('r_entityType')) {
 
@@ -698,7 +454,7 @@
                         if (entityAttrs[e].key === column.key) {
                             if (column['value_type'] === 'field') {
                                 var _groupedItemVal = groupedItem[entityAttrs[e].key];
-                                //if ($scope.readyStatus.cellsFirstReady) {
+                                //if (vm.readyStatus.cellsFirstReady) {
                                 //console.log('entityFieldsArray', entityFieldsArray);
                                 if (entityFieldsArray[column.key]) {
                                     var result = entityFieldsArray[column.key].filter(function (item) {
@@ -725,15 +481,15 @@
 
                                         if (groupedItem[entityAttrs[e].key].length) {
 
-                                            //console.log('$scope.options.permission_selected_entity', $scope.options.permission_selected_entity);
+                                            //console.log('vm.options.permission_selected_entity', vm.options.permission_selected_entity);
 
-                                            if ($scope.options.permission_selected_entity == 'user') {
+                                            if (vm.options.permission_selected_entity == 'user') {
 
                                                 var resultPermission = [];
 
                                                 groupedItem[entityAttrs[e].key].forEach(function (permission) {
 
-                                                    if (permission.member == $scope.options.permission_selected_id) {
+                                                    if (permission.member == vm.options.permission_selected_id) {
                                                         if (permission.permission.indexOf('change') == 0) {
                                                             resultPermission.push('Change');
                                                         }
@@ -751,12 +507,12 @@
 
                                     if (column.key == 'object_permissions_group') {
 
-                                        if ($scope.options.permission_selected_entity == 'group') {
+                                        if (vm.options.permission_selected_entity == 'group') {
 
                                             var resultPermission = [];
 
                                             groupedItem[entityAttrs[e].key].forEach(function (permission) {
-                                                if (permission.group == $scope.options.permission_selected_id) {
+                                                if (permission.group == vm.options.permission_selected_id) {
                                                     if (permission.permission.indexOf('change') == 0) {
                                                         resultPermission.push('Change');
                                                     }
@@ -813,9 +569,9 @@
                     }
 
 
-                    for (c = 0; c < $scope.columns.length; c = c + 1) {
+                    for (c = 0; c < vm.columns.length; c = c + 1) {
 
-                        var column_source = $scope.columns[c];
+                        var column_source = vm.columns[c];
 
                         if (column_source.hasOwnProperty('key')) {
 
@@ -828,7 +584,7 @@
                 }
             };
 
-            $scope.bindCellTitle = function (item, column) {
+            vm.bindCellTitle = function (item, column) {
 
                 var result = '';
 
@@ -844,66 +600,7 @@
                 return result;
             };
 
-            $scope.rowCallback = function (item, ev) {
-                //console.log('open additions!', item);
-                $scope.options.editorEntityId = item.id;
-                var itemHasSimpleSelect = false;
-                if (item.simpleSelect) {
-                    itemHasSimpleSelect = JSON.parse(JSON.stringify(item.simpleSelect));
-                }
-
-                //console.log('$scope.itemAdditionsEditorEntityId', itemHasSimpleSelect);
-
-                $scope.items.forEach(function (item) {
-                    if (item.hasOwnProperty('groups')) {
-                        item.simpleSelect = false;
-                        item.items.forEach(function (row) {
-                            row.simpleSelect = false;
-                        })
-                    } else {
-                        item.simpleSelect = false;
-                    }
-                });
-
-                item.simpleSelect = !item.simpleSelect;
-
-                if (itemHasSimpleSelect == true) {
-                    item.simpleSelect = false;
-                    $scope.options.editorEntityId = undefined;
-                }
-
-                $scope.externalCallback({
-                    silent: true,
-                    redraw: false,
-                    options: {editorEntityId: $scope.options.editorEntityId}
-                });
-
-                //if (localStorage.getItem('entityIsChanged') === "true") { // wow such shitcode
-                //    $mdDialog.show({
-                //        controller: 'WarningDialogController as vm',
-                //        templateUrl: 'views/warning-dialog-view.html',
-                //        parent: angular.element(document.body),
-                //        targetEvent: ev,
-                //        clickOutsideToClose: true,
-                //        locals: {
-                //            warning: {
-                //                title: 'Warning',
-                //                description: 'Unsaved data will be lost'
-                //            }
-                //        }
-                //    }).then(function (res) {
-                //        if (res.status === 'agree') {
-                //            $scope.itemAdditionsEditorEntityId = item.id;
-                //            localStorage.setItem('entityIsChanged', false);
-                //        }
-                //    });
-                //} else {
-                //    $scope.itemAdditionsEditorEntityId = item.id;
-                //    //localStorage.setItem('entityIsChanged', false);
-                //}
-            };
-
-            $scope.getAlign = function (column) {
+            vm.getAlign = function (column) {
 
                 switch (column['value_type']) {
                     case 20:
@@ -921,63 +618,10 @@
                 }
             };
 
-            $scope.deleteEntity = function (ev, entity) {
-
-                $mdDialog.show({
-                    controller: 'EntityViewerDeleteDialogController as vm',
-                    templateUrl: 'views/entity-viewer/entity-viewer-entity-delete-dialog-view.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    //clickOutsideToClose: true,
-                    locals: {
-                        entity: entity,
-                        entityType: $scope.entityType
-                    }
-                }).then(function (res) {
-                    if (res.status === 'agree') {
-                        $scope.externalCallback();
-                    }
-                })
+            vm.changePage = function (page) {
+                vm.externalCallback({options: {paginationPageCurrent: page}});
             };
 
-            $scope.editEntity = function (ev, entity) {
-                $mdDialog.show({
-                    controller: 'EntityViewerEditDialogController as vm',
-                    templateUrl: 'views/entity-viewer/entity-viewer-dialog-view.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    //clickOutsideToClose: true,
-                    locals: {
-                        parent$scope: $scope,
-                        entityId: entity.id
-                    }
-                }).then(function (res) {
-                    if (res && res.res === 'agree') {
-                        $scope.externalCallback();
-                    }
-                });
-            };
-
-            $scope.changePage = function (page) {
-                $scope.externalCallback({options: {paginationPageCurrent: page}});
-            };
-
-            this.$onInit = function () {
-
-                setTimeout(function () {
-
-                    $scope.$watch('options.lastUpdate', function () {
-                        syncGroupsAndColumns();
-
-                        if ($scope.grouping_type == 'area') {
-                            $scope.reportItems = groupTableReportService.transformItems(groupTableService.projection())
-                        }
-                    });
-
-
-                }, 0)
-
-            }
 
         }
     }

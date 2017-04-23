@@ -16,26 +16,33 @@
         controllerAs: 'vm',
         controller: function ($scope) {
 
-            $scope.options = $scope.$parent.options;
+            //vm.options = vm.$parent.options;
 
-            $scope.filters = $scope.options.filters;
-            $scope.isReport = $scope.options.isReport;
-            $scope.entityType = $scope.options.entityType;
-            $scope.externalCallback = $scope.options.externalCallback;
+            var vm = this;
 
-            $scope.fields = {};
-            //$scope.reportOptions = {};
+            this.$onInit = function () {
 
-            $scope.filters.forEach(function (item) {
-                if (!item.options) {
-                    //item.options = {enabled: false};
-                }
-                //item.options.enabled = false;
-            });
+                vm.filters = vm.options.filters;
+                vm.isReport = vm.options.isReport;
+                vm.entityType = vm.options.entityType;
+                vm.externalCallback = vm.options.externalCallback;
 
-            $scope.openReportSettings = function ($event) {
+                vm.fields = {};
+                //vm.reportOptions = {};
 
-                //console.log('$scope.reportOptions', $scope.reportOptions);
+                vm.filters.forEach(function (item) {
+                    if (!item.options) {
+                        //item.options = {enabled: false};
+                    }
+                    //item.options.enabled = false;
+                });
+            };
+
+
+
+            vm.openReportSettings = function ($event) {
+
+                //console.log('vm.reportOptions', vm.reportOptions);
 
                 $mdDialog.show({
                     controller: 'GReportSettingsDialogController as vm',
@@ -43,14 +50,14 @@
                     parent: angular.element(document.body),
                     targetEvent: $event,
                     locals: {
-                        reportOptions: $scope.reportOptions
+                        reportOptions: vm.reportOptions
                     }
                 }).then(function (res) {
 
                     //console.log('res', res);
 
                     if (res.status == 'agree') {
-                        $scope.reportOptions = res.data;
+                        vm.reportOptions = res.data;
                     }
 
                 });
@@ -58,19 +65,19 @@
 
             };
 
-            $scope.calculateReport = function () {
+            vm.calculateReport = function () {
                 //console.log('calculate report');
-                $scope.reportOptions["task_id"] = undefined;
-                $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                vm.reportOptions["task_id"] = undefined;
+                vm.externalCallback({silent: false, options: {filters: vm.filters}});
             };
 
-            $scope.resizeFilterSideNav = function (actionType) {
+            vm.resizeFilterSideNav = function (actionType) {
                 if (actionType === 'collapse') {
                     $('body').addClass('filter-side-nav-collapsed');
-                    $scope.sideNavCollapsed = true;
+                    vm.sideNavCollapsed = true;
                 } else {
                     $('body').removeClass('filter-side-nav-collapsed');
-                    $scope.sideNavCollapsed = false;
+                    vm.sideNavCollapsed = false;
                 }
                 var interval = setInterval(function () {
                     $(window).trigger('resize');
@@ -83,16 +90,16 @@
 
             $scope.$watchCollection('filters', function () {
 
-                //$scope.externalCallback();
+                //vm.externalCallback();
 
                 var promises = [];
 
-                $scope.filters.forEach(function (item) {
+                vm.filters.forEach(function (item) {
                     //console.log("filter's item ", item);
-                    if (!$scope.fields.hasOwnProperty(item.key)) {
+                    if (!vm.fields.hasOwnProperty(item.key)) {
                         //if (item['value_type'] == "mc_field" || item['value_type'] == "field") {
                         //    if (item.key == 'tags') {
-                        //        promises.push(fieldResolverService.getFields(item.key, {entityType: $scope.entityType}));
+                        //        promises.push(fieldResolverService.getFields(item.key, {entityType: vm.entityType}));
                         //    } else {
                         //        promises.push(fieldResolverService.getFields(item.key));
                         //    }
@@ -105,7 +112,7 @@
                 Promise.all(promises).then(function (data) {
                     //console.log("filter's data ", data);
                     data.forEach(function (item) {
-                        $scope.fields[item.key] = item.data;
+                        vm.fields[item.key] = item.data;
                     });
                     $scope.$apply(
                         function () {
@@ -120,95 +127,62 @@
                 });
             });
 
-            $scope.openFilterSettings = function ($mdOpenMenu, ev) {
+            vm.openFilterSettings = function ($mdOpenMenu, ev) {
                 $mdOpenMenu(ev);
             };
 
-            $scope.toggleFilterState = function () {
-                if ($scope.isReport == true) {
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+            vm.toggleFilterState = function () {
+                if (vm.isReport == true) {
+                    vm.externalCallback({silent: true, options: {filters: vm.filters}});
                 } else {
-                    $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                    vm.externalCallback({silent: false, options: {filters: vm.filters}});
                 }
             };
 
-            $scope.filterChange = function (filter) {
-                if ($scope.isReport == true) {
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+            vm.filterChange = function (filter) {
+                if (vm.isReport == true) {
+                    vm.externalCallback({silent: true, options: {filters: vm.filters}});
                 } else {
-                    $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                    vm.externalCallback({silent: false, options: {filters: vm.filters}});
                 }
             };
 
-            $scope.selectAll = function () {
-                $scope.filters.forEach(function (item) {
+            vm.selectAll = function () {
+                vm.filters.forEach(function (item) {
                     item.options.enabled = true;
                 });
-                if ($scope.isReport == true) {
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+                if (vm.isReport == true) {
+                    vm.externalCallback({silent: true, options: {filters: vm.filters}});
                 } else {
-                    $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                    vm.externalCallback({silent: false, options: {filters: vm.filters}});
                 }
             };
 
-            $scope.clearAll = function () {
-                $scope.filters.forEach(function (item) {
+            vm.clearAll = function () {
+                vm.filters.forEach(function (item) {
                     item.options.query = '';
                 });
-                if ($scope.isReport == true) {
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+                if (vm.isReport == true) {
+                    vm.externalCallback({silent: true, options: {filters: vm.filters}});
                 } else {
-                    $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                    vm.externalCallback({silent: false, options: {filters: vm.filters}});
                 }
             };
 
-            $scope.deselectAll = function () {
-                $scope.filters.forEach(function (item) {
+            vm.deselectAll = function () {
+                vm.filters.forEach(function (item) {
                     item.options.enabled = false;
                 });
-                if ($scope.isReport == true) {
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+                if (vm.isReport == true) {
+                    vm.externalCallback({silent: true, options: {filters: vm.filters}});
                 } else {
-                    $scope.externalCallback({silent: false, options: {filters: $scope.filters}});
+                    vm.externalCallback({silent: false, options: {filters: vm.filters}});
                 }
             };
 
-
-            if ($scope.options.isRootEntityViewer == false) {
-
-                $scope.$on('rootEditorEntityIdDown', function (event, data) {
-
-                    $scope.filters.forEach(function (item) {
-                        //console.log('item', item);
-                        if (item.hasOwnProperty('options') && item.options.useFromAbove == true) {
-
-                            if (item.key == data.entityType) {
-                                item.options.query = [data.editorEntityId]
-                            }
-
-                        }
-
-                    });
-
-                    $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
-
-                });
-            }
-
-            $scope.useFromAbove = function (filter) {
-
-                if (!filter.hasOwnProperty('options')) {
-                    filter.options = {};
-                }
-
-                filter.options.useFromAbove = !filter.options.useFromAbove;
-
-                $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
-            };
-
-            $scope.removeFilter = function (filter) {
+            vm.removeFilter = function (filter) {
                 //console.log('filter to remove is ', filter);
-                $scope.filters = $scope.filters.map(function (item) {
+                vm.filters = vm.filters.map(function (item) {
                     // if (item.id === filter.id || item.name === filter.name) {
                     if (item.name === filter.name) {
                         // return undefined;
@@ -220,11 +194,11 @@
                     return !!item;
                 });
 
-                $scope.externalCallback({silent: true, options: {filters: $scope.filters}});
+                vm.externalCallback({silent: true, options: {filters: vm.filters}});
             };
 
 
-            $scope.getFilterType = function (filterType) {
+            vm.getFilterType = function (filterType) {
                 switch (filterType) {
                     case 'field':
                     case 'mc_field':
@@ -235,7 +209,7 @@
                         break;
                 }
             };
-            //console.log('filter fields', $scope.filters);
+            //console.log('filter fields', vm.filters);
         }
     }
 

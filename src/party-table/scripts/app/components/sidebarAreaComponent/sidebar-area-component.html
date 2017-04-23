@@ -4,32 +4,32 @@
         <p class="area-title g-section-title"><span class="g-meta-circle blue">F</span><span class="after-text">ILTER AREA</span>
         </p>
     </div>
-    <div data-ng-if="false">
+    <div data-ng-if="vm.false">
 
         <div class="filters-control-btn s-f-expanded-btns">
-            <md-button class="md-raised" data-ng-click="selectAll()">
+            <md-button class="md-raised" data-ng-click="vm.selectAll()">
                 Select all
             </md-button>
-            <md-button class="md-raised" data-ng-click="deselectAll()">
+            <md-button class="md-raised" data-ng-click="vm.deselectAll()">
                 Deselect all
             </md-button>
         </div>
         <div class="filters-control-btn s-f-expanded-btns">
-            <md-button class="md-raised clear-all full-width" data-ng-click="clearAll()">
+            <md-button class="md-raised clear-all full-width" data-ng-click="vm.clearAll()">
                 Clear all
             </md-button>
         </div>
 
     </div>
 
-    <div dragula="'filters-bag'" dragula-model="filters" class="filters-holder">
-        <div data-ng-repeat="filter in filters"
+    <div dragula="'filters-bag'" dragula-model="vm.filters" class="filters-holder">
+        <div data-ng-repeat="filter in vm.filters"
              class="{{filter.options.enabled ? '' : 'f-disabled' }} g-filter-item pt-card pt-filter-card">
             <div class="pt-fc-checkbox-section">
                 <div class="pt-checkbox-control">
                     <label>
                         <input type="checkbox" ng-model="filter.options.enabled" aria-label="filters"
-                               ng-change="toggleFilterState(filter)">
+                               ng-change="vm.toggleFilterState(filter)">
                         <span class="pt-checkbox-span"><span class="pt-checkbox-span-check"></span></span>
                     </label>
                 </div>
@@ -37,15 +37,15 @@
             <div class="pt-fc-input-section">
 
                 <label data-ng-bind="filter.name"></label>
-                <div data-ng-if="getFilterType(filter['value_type'])">
+                <div data-ng-if="vm.getFilterType(filter['value_type'])">
                     <!-- {{fields}} -->
-                    <div data-ng-if="fields[filter.key]">
-                        <md-select data-ng-model="filter.options.query"
+                    <div data-ng-if="vm.fields[filter.key]">
+                        <md-select data-ng-model="vm.filter.options.query"
                                    md-on-close="searchTerm = ''"
-                                   data-ng-change="filterChange(filter)"
+                                   data-ng-change="vm.filterChange(filter)"
                                    multiple="{{fields['value_type'] == 'mc_field' ? 'true' : 'false'}}">
                             <md-select-header>
-                                <input data-ng-model="searchTerm"
+                                <input data-ng-model="vm.searchTerm"
                                        type="search"
                                        placeholder="Search for a ..."
                                        class="md-text md-select-search-pattern">
@@ -57,53 +57,31 @@
                             </md-option>
                         </md-select>
                     </div>
-                    <div data-ng-if="!fields[filter.key]">
+                    <div data-ng-if="!vm.fields[filter.key]">
                         <div>
                             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                         </div>
                     </div>
                 </div>
-                <!-- <div data-ng-if="filter['value_type'] !== 'field'"> -->
-                <div data-ng-if="!getFilterType(filter['value_type'])">
-                    <input data-ng-model="filter.options.query" data-ng-change="filterChange(filter)"
+                <!-- <div data-ng-if="vm.filter['value_type'] !== 'field'"> -->
+                <div data-ng-if="!vm.getFilterType(filter['value_type'])">
+                    <input data-ng-model="vm.filter.options.query" data-ng-change="vm.filterChange(filter)"
                            data-ng-model-options="{debounce: 1000}">
                 </div>
 
             </div>
             <div class="pt-fc-settings-section">
                 <div class="settings-btn">
-                    <md-menu data-ng-if="options.isRootEntityViewer">
+                    <md-menu>
                         <md-button aria-label="Open phone interactions menu" class="md-icon-button"
-                                   ng-click="openFilterSettings($mdOpenMenu, $event)">
+                                   ng-click="vm.openFilterSettings($mdOpenMenu, $event)">
                             <ng-md-icon icon="settings"></ng-md-icon>
                         </md-button>
                         <md-menu-content width="3">
                             <md-menu-item>
-                                <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
+                                <md-button ng-click="vm.removeFilter(filter)" class="g-settings-option-btn">
                                     <ng-md-icon icon="visibility_off"></ng-md-icon>
                                     <span>Remove</span>
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu data-ng-if="!options.isRootEntityViewer && false">
-                        <md-button aria-label="Open phone interactions menu" class="md-icon-button"
-                                   ng-click="openFilterSettings($mdOpenMenu, $event)">
-                            <ng-md-icon icon="settings"></ng-md-icon>
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item>
-                                <md-button ng-click="removeFilter(filter)" class="g-settings-option-btn">
-                                    <ng-md-icon icon="visibility_off"></ng-md-icon>
-                                    <span>Remove</span>
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="useFromAbove(filter)" class="g-settings-option-btn">
-                                    <ng-md-icon icon="done" data-ng-show="filter.options.useFromAbove"></ng-md-icon>
-                                    <ng-md-icon icon="done" style="visibility: hidden;"
-                                                data-ng-show="!filter.options.useFromAbove"></ng-md-icon>
-                                    <span>Use from above</span>
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
@@ -112,7 +90,7 @@
             </div>
         </div>
     </div>
-    <div class="drop-new-filter" data-ng-if="options.interface.dragging">
+    <div class="drop-new-filter" data-ng-if="vm.options.interface.dragging">
         Drop new Filter
     </div>
 </div>

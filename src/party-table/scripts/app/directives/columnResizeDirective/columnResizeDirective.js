@@ -9,13 +9,11 @@
         return {
             restrict: 'A',
             scope: {
-                //items: '=',
-                //options: '='
+                items: '=',
+                options: '='
             },
             link: function (scope, elem, attr) {
 
-                scope.options = scope.$parent.options;
-                scope.items = scope.$parent.items;
                 scope.columnsWidth = scope.options.columnsWidth;
 
                 var minWidth = 65;	// width value for showing tooltip

@@ -13,49 +13,57 @@
         controllerAs: 'vm',
         controller: function ($scope, ptDialog) {
 
-            $scope.options = $scope.$parent.options;
+            //vm.options = vm.$parent.options;
 
-            $scope.grouping = $scope.options.grouping;
-            $scope.filters = $scope.options.filters;
-            $scope.columns = $scope.options.columns;
-            $scope.sorting = $scope.options.sorting;
-            $scope.folding = $scope.options.folding;
-            $scope.entityType = $scope.options.entityType;
-            $scope.externalCallback = $scope.options.externalCallback;
-            $scope.isReport = $scope.options.isReport;
+            var vm = this;
 
-            $scope.sortHandler = function (group, sort) {
+            console.log('grouping', vm);
+
+            this.$onInit = function () {
+
+                vm.grouping = vm.options.grouping;
+                vm.filters = vm.options.filters;
+                vm.columns = vm.options.columns;
+                vm.sorting = vm.options.sorting;
+                vm.folding = vm.options.folding;
+                vm.entityType = vm.options.entityType;
+                vm.externalCallback = vm.options.externalCallback;
+                vm.isReport = vm.options.isReport;
+
+            };
+
+            vm.sortHandler = function (group, sort) {
                 var i;
-                for (i = 0; i < $scope.grouping.length; i = i + 1) {
-                    if (!$scope.grouping[i].options) {
-                        $scope.grouping[i].options = {};
+                for (i = 0; i < vm.grouping.length; i = i + 1) {
+                    if (!vm.grouping[i].options) {
+                        vm.grouping[i].options = {};
                     }
-                    $scope.grouping[i].options.sort = null;
+                    vm.grouping[i].options.sort = null;
                 }
                 group.options.sort = sort;
                 if (group.hasOwnProperty('id')) {
-                    $scope.sorting.group = {};
-                    $scope.sorting.group.id = group.id;
-                    $scope.sorting.group.key = null;
-                    $scope.sorting.group.sort = sort;
+                    vm.sorting.group = {};
+                    vm.sorting.group.id = group.id;
+                    vm.sorting.group.key = null;
+                    vm.sorting.group.sort = sort;
                 } else {
-                    $scope.sorting.group = {};
-                    $scope.sorting.group.id = null;
-                    $scope.sorting.group.key = group.key;
-                    $scope.sorting.group.sort = sort;
+                    vm.sorting.group = {};
+                    vm.sorting.group.id = null;
+                    vm.sorting.group.key = group.key;
+                    vm.sorting.group.sort = sort;
                 }
-                $scope.externalCallback({silent: true, options: {grouping: $scope.grouping}});
+                vm.externalCallback({silent: true, options: {grouping: vm.grouping}});
             };
 
-            $scope.openGroupSettings = function ($mdOpenMenu, ev) {
+            vm.openGroupSettings = function ($mdOpenMenu, ev) {
                 $mdOpenMenu(ev);
             };
 
             $scope.$watchCollection('grouping', function () {
 
 
-                if ($scope.isReport == true) {
-                    $scope.grouping.forEach(function (group) {
+                if (vm.isReport == true) {
+                    vm.grouping.forEach(function (group) {
 
                         if (!group.hasOwnProperty('report_settings') && !group.report_settings) {
                             group.report_settings = {subtotal_type: 'area'};
@@ -70,24 +78,24 @@
                 }
 
                 setTimeout(function () {
-                    $scope.externalCallback({silent: true, options: {grouping: $scope.grouping}});
+                    vm.externalCallback({silent: true, options: {grouping: vm.grouping}});
                     $scope.$apply();
                 }, 0)
             });
 
-            $scope.toggleGroupFold = function () {
-                $scope.folding = !$scope.folding;
+            vm.toggleGroupFold = function () {
+                vm.folding = !vm.folding;
                 setTimeout(function () {
-                    $scope.externalCallback({silent: true, options: {grouping: $scope.grouping}});
+                    vm.externalCallback({silent: true, options: {grouping: vm.grouping}});
                     $scope.$apply();
                 }, 0)
             };
 
-            $scope.removeGroup = function (group) {
-                //console.log('grouping', $scope.grouping);
+            vm.removeGroup = function (group) {
+                //console.log('grouping', vm.grouping);
                 //console.log('remove', group);
                 if (group.id) {
-                    $scope.grouping = $scope.grouping.map(function (item) {
+                    vm.grouping = vm.grouping.map(function (item) {
                         if (item.id === group.id) {
                             item = undefined
                         }
@@ -97,7 +105,7 @@
                     });
                 }
                 if (group.name) {
-                    $scope.grouping = $scope.grouping.map(function (item) {
+                    vm.grouping = vm.grouping.map(function (item) {
                         if (item.name === group.name) {
                             item = undefined
                         }
@@ -106,13 +114,13 @@
                         return !!item;
                     });
                 }
-                //console.log('grouping after', $scope.grouping);
+                //console.log('grouping after', vm.grouping);
                 setTimeout(function () {
-                    $scope.externalCallback({silent: true, options: {grouping: $scope.grouping}});
+                    vm.externalCallback({silent: true, options: {grouping: vm.grouping}});
                 }, 0)
             };
 
-            $scope.reportSetSubtotalType = function (group, type, $index) {
+            vm.reportSetSubtotalType = function (group, type, $index) {
 
                 if (!group.hasOwnProperty('report_settings') || group.report_settings == undefined) {
                     group.report_settings = {};
@@ -120,7 +128,7 @@
 
                 if (type == 'area') {
 
-                    $scope.grouping.forEach(function (groupItem, $itemIndex) {
+                    vm.grouping.forEach(function (groupItem, $itemIndex) {
 
                         if ($itemIndex > $index) {
                             groupItem.disableLineSubtotal = true;
@@ -145,7 +153,7 @@
 
                 if (type == 'line') {
 
-                    $scope.grouping.forEach(function (groupItem, $itemIndex) {
+                    vm.grouping.forEach(function (groupItem, $itemIndex) {
 
                         if ($itemIndex > $index) {
                             groupItem.disableLineSubtotal = false;
@@ -161,28 +169,28 @@
                 }
 
 
-                $scope.externalCallback({silent: true, options: {grouping: $scope.grouping}});
+                vm.externalCallback({silent: true, options: {grouping: vm.grouping}});
             };
 
-            $scope.isReportGroupHaveExtSettings = function (group, $index, subtotalType) {
+            vm.isReportGroupHaveExtSettings = function (group, $index, subtotalType) {
 
                 var haveAccess = false;
                 var preInitOffset = 0;
                 var initIndex = 0;
 
-                $scope.grouping.forEach(function (groupItem, $groupItemIndex) {
+                vm.grouping.forEach(function (groupItem, $groupItemIndex) {
 
-                    if ($scope.columns.length > $groupItemIndex) {
+                    if (vm.columns.length > $groupItemIndex) {
                         if (groupItem.hasOwnProperty('id')) {
-                            if (groupItem.id == $scope.columns[$groupItemIndex - preInitOffset].id) {
+                            if (groupItem.id == vm.columns[$groupItemIndex - preInitOffset].id) {
                                 initIndex = preInitOffset;
                             } else {
                                 preInitOffset = preInitOffset + 1;
                             }
                         } else {
-                            if (groupItem.hasOwnProperty('key') && $scope.columns[$groupItemIndex] && $scope.columns[$groupItemIndex].hasOwnProperty('key')) {
+                            if (groupItem.hasOwnProperty('key') && vm.columns[$groupItemIndex] && vm.columns[$groupItemIndex].hasOwnProperty('key')) {
 
-                                if (groupItem.key == $scope.columns[$groupItemIndex - preInitOffset].key) {
+                                if (groupItem.key == vm.columns[$groupItemIndex - preInitOffset].key) {
                                     initIndex = preInitOffset;
                                 } else {
                                     preInitOffset = preInitOffset + 1;
@@ -195,14 +203,14 @@
 
                 });
 
-                if ($scope.columns.length > $index) {
-                    if (group.hasOwnProperty('id') && $scope.columns[$index - initIndex] && $scope.columns[$index - initIndex].hasOwnProperty('id')) {
-                        if (group.id == $scope.columns[$index - initIndex].id) {
+                if (vm.columns.length > $index) {
+                    if (group.hasOwnProperty('id') && vm.columns[$index - initIndex] && vm.columns[$index - initIndex].hasOwnProperty('id')) {
+                        if (group.id == vm.columns[$index - initIndex].id) {
                             haveAccess = true;
                         }
                     } else {
-                        if (group.hasOwnProperty('key') && $scope.columns[$index - initIndex] && $scope.columns[$index - initIndex].hasOwnProperty('key')) {
-                            if (group.key == $scope.columns[$index - initIndex].key) {
+                        if (group.hasOwnProperty('key') && vm.columns[$index - initIndex] && vm.columns[$index - initIndex].hasOwnProperty('key')) {
+                            if (group.key == vm.columns[$index - initIndex].key) {
                                 haveAccess = true;
                             }
                         }
@@ -218,7 +226,7 @@
 
             };
 
-            $scope.openModalSettings = function (ev) {
+            vm.openModalSettings = function (ev) {
 
                 console.log('ptDialog', ptDialog);
 
@@ -229,7 +237,7 @@
                     targetEvent: ev,
                     locals: {
                         data: {
-                            callback: $scope.externalCallback,
+                            callback: vm.externalCallback,
                             parent$scope: $scope
                         }
                     }

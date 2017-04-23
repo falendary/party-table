@@ -5,20 +5,20 @@
     </div>
     <div class="g-second-line">
         <div class="groups-holder">
-            <div class="group-folding-holder" data-ng-if="!options.isReport && false">
+            <div class="group-folding-holder" data-ng-if="!vm.options.isReport && false">
                 <div class="pt-card">
                     <div>
                         <!--<div class="fold-btn-wrap {{folding ? '' : 'disabled'}}">-->
                         <div class="fold-btn-wrap">
                             <md-button class="grouping-fold-btn" aria-label="hide/show grouping"
-                                       data-ng-click="toggleGroupFold()">
+                                       data-ng-click="vm.toggleGroupFold()">
                                 <ng-md-icon icon="add"></ng-md-icon>
                             </md-button>
                         </div>
                         <!--<div class="fold-btn-wrap {{folding ? 'disabled' : ''}}">-->
                         <div class="fold-btn-wrap">
                             <md-button class="grouping-fold-btn" aria-label="hide/show grouping"
-                                       data-ng-click="toggleGroupFold()">
+                                       data-ng-click="vm.toggleGroupFold()">
                                 <ng-md-icon icon="remove"></ng-md-icon>
                             </md-button>
                         </div>
@@ -26,18 +26,18 @@
                 </div>
             </div>
             <div dragula="'group-bag'" dragula-model="grouping">
-                <div data-ng-repeat="item in options.grouping track by $index" class="pt-card group-item">
+                <div data-ng-repeat="item in vm.options.grouping track by $index" class="pt-card group-item">
                     <div class="sort">
                         <a class="group-sort" data-ng-show="item.options.sort === 'ASC'"
-                           aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">
+                           aria-label="open settings" data-ng-click="vm.sortHandler(item, 'DESC')">
                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
                         <a class="group-sort-up" data-ng-show="item.options.sort === 'DESC'"
-                           aria-label="open settings" data-ng-click="sortHandler(item, 'ASC')">
+                           aria-label="open settings" data-ng-click="vm.sortHandler(item, 'ASC')">
                             <i class="fa fa-angle-up" aria-hidden="true"></i>
                         </a>
                         <a class="group-sort group-both-sorted" data-ng-show="!item.options.sort"
-                           aria-label="open settings" data-ng-click="sortHandler(item, 'DESC')">
+                           aria-label="open settings" data-ng-click="vm.sortHandler(item, 'DESC')">
                             <i class="fa fa-angle-up" aria-hidden="true"></i>
                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </a>
@@ -46,19 +46,19 @@
                     <div class="settings-btn">
                         <!--<md-menu data-ng-if="options.isReport">-->
                         <!--<md-button aria-label="Open phone interactions menu" class="md-icon-button"-->
-                        <!--ng-click="openGroupSettings($mdOpenMenu, $event)">-->
+                        <!--ng-click="vm.openGroupSettings($mdOpenMenu, $event)">-->
                         <!--<ng-md-icon icon="settings"></ng-md-icon>-->
                         <!--</md-button>-->
                         <!--<md-menu-content width="4">-->
                         <!--<md-menu-item>-->
-                        <!--<md-button ng-click="removeGroup(item)" class="g-settings-option-btn">-->
+                        <!--<md-button ng-click="vm.removeGroup(item)" class="g-settings-option-btn">-->
                         <!--<ng-md-icon icon="visibility_off"></ng-md-icon>-->
                         <!--<span>Remove</span>-->
                         <!--</md-button>-->
                         <!--</md-menu-item>-->
                         <!--<md-menu-item data-ng-if="isReportGroupHaveExtSettings(item, $index, 'line')">-->
                         <!--<md-button md-prevent-menu-close="md-prevent-menu-close"-->
-                        <!--ng-click="reportSetSubtotalType(item, 'line', $index)"-->
+                        <!--ng-click="vm.reportSetSubtotalType(item, 'line', $index)"-->
                         <!--class="g-settings-option-btn">-->
                         <!--<ng-md-icon icon="done"-->
                         <!--data-ng-show="item.report_settings.subtotal_type == 'line'"></ng-md-icon>-->
@@ -69,7 +69,7 @@
                         <!--</md-menu-item>-->
                         <!--<md-menu-item data-ng-if="isReportGroupHaveExtSettings(item, $index, 'area')">-->
                         <!--<md-button md-prevent-menu-close="md-prevent-menu-close"-->
-                        <!--ng-click="reportSetSubtotalType(item, 'area', $index)"-->
+                        <!--ng-click="vm.reportSetSubtotalType(item, 'area', $index)"-->
                         <!--class="g-settings-option-btn">-->
                         <!--<ng-md-icon icon="done"-->
                         <!--data-ng-show="item.report_settings.subtotal_type == 'area'"></ng-md-icon>-->
@@ -86,7 +86,7 @@
                             </a>
                             <ul class="pt-dropdown-content">
                                 <li>
-                                    <a ng-click="removeGroup(item)" class="g-settings-option-btn pt-button">
+                                    <a ng-click="vm.removeGroup(item)" class="g-settings-option-btn pt-button">
                                         <span>Remove</span>
                                     </a>
                                 </li>
@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="drop-new-group" id="groupsbag" data-ng-if="options.interface.dragging">
+            <div class="drop-new-group" id="groupsbag" data-ng-if="vm.options.interface.dragging">
                 <!-- Drop level {{grouping.length + 1}} Group -->
                 Drop New Grouping Level
             </div>
@@ -103,7 +103,7 @@
 
         <a class="pt-button pt-round-button g-settings-btn"
            aria-label="drag modal"
-           data-ng-click="openModalSettings($event)">
+           data-ng-click="vm.openModalSettings($event)">
             <i class="fa fa-bars"></i>
         </a>
     </div>

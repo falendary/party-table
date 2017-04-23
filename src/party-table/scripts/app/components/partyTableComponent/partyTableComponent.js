@@ -58,6 +58,8 @@
                         updateOptions(params.options);
                     }
 
+                    console.log('vm.options', vm.options);
+
                     vm.options.lastUpdate = new Date().getTime();
 
                     vm.originalItems = JSON.parse(JSON.stringify(vm.items));
@@ -128,6 +130,8 @@
 
                 vm.items = vm.options.items;
                 vm.options = extendDefaults(vm.options, defaultOptions);
+
+                console.log('$scope.options', vm.options);
 
                 entityService.setEntities(vm.options.entity_models);
 

@@ -23,12 +23,13 @@
         // end refactore
 
         var parentScope = data.parent$scope;
+        var parentScopeVm = data.parent$scope.vm;
         var callback = data.callback;
 
-        var columns = parentScope.columns;
-        var currentColumnsWidth = parentScope.columns.length;
-        var filters = parentScope.filters;
-        var grouping = parentScope.grouping;
+        var columns = parentScopeVm.columns;
+        //var currentColumnsWidth = parentScopeVm.columns.length;
+        var filters = parentScopeVm.filters;
+        var grouping = parentScopeVm.grouping;
 
         var attrsList = [];
 
@@ -46,23 +47,23 @@
         };
 
 
-        parentScope.$watch('options.columns', function () {
+        parentScope.$watch('vm.columns', function () {
             if (vm.tabAttrsReady) {
-                columns = parentScope.options.columns;
+                columns = parentScopeVm.options.columns;
                 syncAttrs();
                 callback({silent: true});
             }
         });
-        parentScope.$watch('options.filters', function () {
+        parentScope.$watch('vm.filters', function () {
             if (vm.tabAttrsReady) {
-                filters = parentScope.options.filters;
+                filters = parentScopeVm.options.filters;
                 syncAttrs();
                 callback({silent: true});
             }
         });
-        parentScope.$watch('options.grouping', function () {
+        parentScope.$watch('vm.grouping', function () {
             if (vm.tabAttrsReady) {
-                grouping = parentScope.options.grouping;
+                grouping = parentScopeVm.options.grouping;
                 syncAttrs();
                 callback({silent: true});
             }
@@ -217,7 +218,7 @@
                 }
             });
 
-            // console.log('attributes in modal ', vm.attrs, vm.baseAttrs, vm.entityAttrs, parentScope);
+            // console.log('attributes in modal ', vm.attrs, vm.baseAttrs, vm.entityAttrs, parentScopeVm);
         }
 
         vm.updateAttrs = function () {
